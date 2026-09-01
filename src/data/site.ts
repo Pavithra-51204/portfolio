@@ -10,7 +10,7 @@ export const site = {
   },
   resumeUrl: '/Pavithra_Manogaran_Resume.pdf',
   description:
-    'Systems and AI engineer building distributed infrastructure, autonomous agents, and reliability tooling. Final-year CSE student, SAP Analyst Intern at Kaar Technologies, applying to MSc programmes in ML/AI for Fall 2027.',
+    "Experienced in AI/ML systems design and development, with a strong foundation in SAP enterprise platforms, cloud infrastructure, DevOps, and full-stack development. Skilled in agentic AI, retrieval-augmented generation, multi-agent orchestration, and model evaluation, with hands-on experience in SAP ABAP/OData development, AWS and Azure deployments, and CI/CD automation. Seeking to pursue a Master's to deepen my skills in artificial intelligence, machine learning, and data science, with a focus on building practical and scalable AI systems.",
 } as const;
 
 export const education = [

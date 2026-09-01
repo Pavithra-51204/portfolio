@@ -4,7 +4,7 @@
     "name": "AgentForge",
     "tagline": "Prompt-to-agent workspace",
     "summary": "Turns a plain-English description into a schema-validated agent specification, then runs it through a LangGraph plan → act → observe → reflect loop against real tools over MCP — with per-project isolation for chats, agents, knowledge bases, and memory.",
-    "outcome": "agents run against real tools over MCP, not mocked",
+    "outcome": "agents run against real tools over MCP",
     "featured": true,
     "order": 1,
     "stack": ["LangGraph", "MCP", "FastAPI", "Next.js", "Postgres", "Chroma"],

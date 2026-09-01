@@ -13,17 +13,16 @@ import { site } from '../data/site';
         <h1 class="text-4xl font-semibold leading-tight tracking-tight md:text-5xl">
           {site.name}
         </h1>
-        <p class="mt-2 font-mono text-lg text-paper/70">{site.role}</p>
       </div>
       <p class="max-w-md text-base leading-relaxed text-paper/80">
         {site.description}
       </p>
       <div class="flex flex-wrap gap-3 font-mono text-sm">
         <a
-          href="#work"
+          href="#projects"
           class="border border-paper/30 px-4 py-2 text-paper transition-colors hover:border-signal hover:text-signal"
         >
-          see the work
+          see the projects
         </a>
         <a
           href={site.resumeUrl}
@@ -38,15 +37,9 @@ import { site } from '../data/site';
       <svg
         viewBox="0 0 640 280"
         role="img"
-        aria-labelledby="routing-diagram-title routing-diagram-desc"
+        aria-label="Adaptive request routing, from VelocityLB: a client sends requests to three backend nodes. Node A and Node C are healthy with p99 latency of 41ms and 38ms. Node B is degraded at 503ms latency and is routed around."
         class="w-full"
       >
-        <title id="routing-diagram-title">Adaptive request routing, from VelocityLB</title>
-        <desc id="routing-diagram-desc">
-          A client sends requests to three backend nodes. Node A and Node C are healthy with p99
-          latency of 41ms and 38ms. Node B is degraded at 503ms latency and is routed around.
-        </desc>
-
         <!-- client -->
         <g>
           <circle cx="60" cy="140" r="26" fill="none" stroke="#F4F5F1" stroke-opacity="0.5" stroke-width="1.5" />
