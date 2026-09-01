@@ -3,144 +3,19 @@ import { site } from '../data/site';
 ---
 
 <section id="contact" class="border-t border-ink/10 bg-panel-dark text-paper">
-  <div class="mx-auto max-w-5xl px-6 py-16 md:py-20">
-    <div class="grid gap-10 lg:grid-cols-2 lg:gap-16">
-      <div>
-        <h2 class="text-2xl font-semibold tracking-tight md:text-3xl">Contact</h2>
-        <p class="mt-4 max-w-sm text-sm leading-relaxed text-paper/75">
-          The fastest way to reach me is email. If you'd rather send a note directly from here,
-          use the form &mdash; it goes straight to my inbox.
-        </p>
-        <div class="mt-6 flex flex-col gap-2 font-mono text-sm">
-          <a href={`mailto:${site.email}`} class="text-paper hover:text-signal">{site.email}</a>
-          <a href={site.links.linkedin} class="text-paper/70 hover:text-signal">LinkedIn</a>
-          <a href={site.links.github} class="text-paper/70 hover:text-signal">GitHub</a>
-          <a href={site.links.medium} class="text-paper/70 hover:text-signal">Medium</a>
-          <a href={site.resumeUrl} class="text-paper/70 hover:text-signal">resume.pdf</a>
-        </div>
-      </div>
-
-      <form
-        name="contact"
-        method="POST"
-        data-netlify="true"
-        data-netlify-honeypot="bot-field"
-        action="/thank-you/"
-        novalidate
-        class="flex flex-col gap-4"
-        id="contact-form"
-      >
-        <input type="hidden" name="form-name" value="contact" />
-        <p class="hidden">
-          <label>
-            Don't fill this out if you're human: <input name="bot-field" />
-          </label>
-        </p>
-
-        <div class="flex flex-col gap-1.5">
-          <label for="name" class="font-mono text-xs text-paper/60">name</label>
-          <input
-            id="name"
-            name="name"
-            type="text"
-            required
-            aria-describedby="name-error"
-            class="border border-paper/25 bg-transparent px-3 py-2 text-sm text-paper outline-none focus-visible:border-signal [&[aria-invalid='true']]:border-warn"
-          />
-          <p id="name-error" class="hidden font-mono text-xs text-warn" role="alert"></p>
-        </div>
-
-        <div class="flex flex-col gap-1.5">
-          <label for="email" class="font-mono text-xs text-paper/60">email</label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            required
-            aria-describedby="email-error"
-            class="border border-paper/25 bg-transparent px-3 py-2 text-sm text-paper outline-none focus-visible:border-signal [&[aria-invalid='true']]:border-warn"
-          />
-          <p id="email-error" class="hidden font-mono text-xs text-warn" role="alert"></p>
-        </div>
-
-        <div class="flex flex-col gap-1.5">
-          <label for="message" class="font-mono text-xs text-paper/60">message</label>
-          <textarea
-            id="message"
-            name="message"
-            rows="4"
-            required
-            aria-describedby="message-error"
-            class="border border-paper/25 bg-transparent px-3 py-2 text-sm text-paper outline-none focus-visible:border-signal [&[aria-invalid='true']]:border-warn"
-          ></textarea>
-          <p id="message-error" class="hidden font-mono text-xs text-warn" role="alert"></p>
-        </div>
-
-        <button
-          type="submit"
-          class="self-start border border-paper/30 px-4 py-2 font-mono text-sm text-paper transition-colors hover:border-signal hover:text-signal"
-        >
-          send
-        </button>
-      </form>
+  <div class="mx-auto flex max-w-xl flex-col items-center gap-6 px-6 py-24 text-center md:py-32">
+    <h2 class="text-2xl font-semibold tracking-tight md:text-3xl">Contact</h2>
+    <p class="max-w-prose text-sm leading-relaxed text-paper/75">
+      The fastest way to reach me is email &mdash; I read every message.
+    </p>
+    <a href={`mailto:${site.email}`} class="font-mono text-lg text-paper hover:text-signal md:text-xl">
+      {site.email}
+    </a>
+    <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-mono text-sm">
+      <a href={site.links.linkedin} class="text-paper/70 hover:text-signal">LinkedIn</a>
+      <a href={site.links.github} class="text-paper/70 hover:text-signal">GitHub</a>
+      <a href={site.links.medium} class="text-paper/70 hover:text-signal">Medium</a>
+      <a href={site.resumeUrl} class="text-paper/70 hover:text-signal">resume.pdf</a>
     </div>
   </div>
 </section>
-
-<script>
-  const form = document.getElementById('contact-form') as HTMLFormElement | null;
-  if (form) {
-    const fields = ['name', 'email', 'message'] as const;
-
-    const messageFor = (input: HTMLInputElement | HTMLTextAreaElement): string => {
-      if (input.validity.valueMissing) return 'This field is required.';
-      if (input.validity.typeMismatch && input.type === 'email') {
-        return 'Enter a valid email address.';
-      }
-      return 'Please check this field.';
-    };
-
-    const setError = (name: string, message: string | null) => {
-      const input = form.elements.namedItem(name) as HTMLInputElement | HTMLTextAreaElement | null;
-      const errorEl = document.getElementById(`${name}-error`);
-      if (!input || !errorEl) return;
-
-      if (message) {
-        input.setAttribute('aria-invalid', 'true');
-        errorEl.textContent = message;
-        errorEl.classList.remove('hidden');
-      } else {
-        input.removeAttribute('aria-invalid');
-        errorEl.textContent = '';
-        errorEl.classList.add('hidden');
-      }
-    };
-
-    const validateField = (name: string): boolean => {
-      const input = form.elements.namedItem(name) as HTMLInputElement | HTMLTextAreaElement | null;
-      if (!input) return true;
-      const valid = input.checkValidity();
-      setError(name, valid ? null : messageFor(input));
-      return valid;
-    };
-
-    for (const name of fields) {
-      const input = form.elements.namedItem(name) as HTMLInputElement | HTMLTextAreaElement | null;
-      input?.addEventListener('input', () => {
-        if (input.getAttribute('aria-invalid') === 'true') validateField(name);
-      });
-      input?.addEventListener('blur', () => validateField(name));
-    }
-
-    form.addEventListener('submit', (event) => {
-      const results = fields.map((name) => validateField(name));
-      if (results.includes(false)) {
-        event.preventDefault();
-        const firstInvalid = fields.find((_, i) => !results[i]);
-        if (firstInvalid) {
-          (form.elements.namedItem(firstInvalid) as HTMLElement | null)?.focus();
-        }
-      }
-    });
-  }
-</script>
