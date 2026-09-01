@@ -1,0 +1,92 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { site } from '../../data/site';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { id: project.data.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { name, tagline, summary, outcome, stack, repoUrl, liveUrl, detail } = project.data;
+---
+
+<Layout
+  title={`${name} — ${site.name}`}
+  description={summary}
+  ogImagePath={`/og/${project.data.id}.png`}
+  jsonLd={{
+    '@type': 'CreativeWork',
+    name,
+    description: summary,
+    url: repoUrl,
+    author: { '@type': 'Person', name: site.name },
+  }}
+>
+  <article class="mx-auto max-w-3xl px-6 py-16 md:py-20">
+    <a href="/#work" class="font-mono text-xs text-ink/65 hover:text-signal">&larr; selected work</a>
+
+    <div class="mt-6 flex flex-col gap-2 border-b border-ink/10 pb-8 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
+      <div>
+        <h1 class="text-3xl font-semibold tracking-tight md:text-4xl">{name}</h1>
+        <p class="mt-1 font-mono text-sm text-ink/65">{tagline}</p>
+      </div>
+      {outcome && <p class="shrink-0 font-mono text-sm text-signal">{outcome}</p>}
+    </div>
+
+    <div class="mt-6 flex flex-wrap items-center gap-4 border-b border-ink/10 pb-8">
+      <div class="flex flex-wrap gap-1.5">
+        {stack.map((tech) => (
+          <span class="border border-ink/15 px-1.5 py-0.5 font-mono text-[11px] text-ink/65">{tech}</span>
+        ))}
+      </div>
+      <div class="ml-auto flex gap-4 font-mono text-xs">
+        <a href={repoUrl} class="text-ink/70 underline decoration-ink/30 underline-offset-4 hover:text-signal hover:decoration-signal">
+          source
+        </a>
+        {liveUrl && (
+          <a href={liveUrl} class="text-ink/70 underline decoration-ink/30 underline-offset-4 hover:text-signal hover:decoration-signal">
+            live demo
+          </a>
+        )}
+      </div>
+    </div>
+
+    {detail && (
+      <div class="mt-10 flex flex-col gap-10">
+        <div>
+          <h2 class="mb-3 font-mono text-xs text-ink/65">the problem</h2>
+          <p class="text-base leading-relaxed text-ink/80">{detail.problem}</p>
+        </div>
+
+        <div>
+          <h2 class="mb-3 font-mono text-xs text-ink/65">architecture notes</h2>
+          <ul class="space-y-3">
+            {detail.architectureNotes.map((note) => (
+              <li class="flex gap-3 text-sm leading-relaxed text-ink/80">
+                <span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-ink/30"></span>
+                <span>{note}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="mb-3 font-mono text-xs text-ink/65">highlights</h2>
+          <ul class="space-y-3">
+            {detail.highlights.map((point) => (
+              <li class="flex gap-3 text-sm leading-relaxed text-ink/80">
+                <span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-signal"></span>
+                <span>{point}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    )}
+  </article>
+</Layout>

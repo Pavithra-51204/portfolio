@@ -1,0 +1,57 @@
+[
+  {
+    "id": "ai-ml",
+    "label": "AI / ML",
+    "items": [
+      "Scikit-Learn",
+      "TensorFlow",
+      "LangChain",
+      "Agentic AI",
+      "LangGraph",
+      "AWS Bedrock",
+      "Prompt Engineering",
+      "RAG Systems",
+      "Model Evaluation"
+    ],
+    "order": 1
+  },
+  {
+    "id": "languages",
+    "label": "Languages",
+    "items": ["Python", "Java", "JavaScript", "HTML", "CSS"],
+    "order": 2
+  },
+  {
+    "id": "frameworks-apis",
+    "label": "Frameworks & APIs",
+    "items": ["React", "FastAPI", "Flask", "REST APIs", "SAP ABAP", "OData", "UI5"],
+    "order": 3
+  },
+  {
+    "id": "backend-data",
+    "label": "Backend & Data",
+    "items": ["Node.js", "Express", "MySQL", "MongoDB", "ChromaDB"],
+    "order": 4
+  },
+  {
+    "id": "cloud-devops",
+    "label": "Cloud & DevOps",
+    "items": [
+      "AWS",
+      "Microsoft Azure",
+      "Docker",
+      "Kubernetes",
+      "Terraform",
+      "Jenkins",
+      "Prometheus",
+      "Grafana"
+    ],
+    "order": 5
+  },
+  {
+    "id": "tooling",
+    "label": "Tooling",
+    "items": ["Git", "GitHub", "Linux", "VS Code", "Postman", "Ollama"],
+    "order": 6
+  }
+]

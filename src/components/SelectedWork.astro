@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects'))
+  .filter((p) => p.data.featured)
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<section id="work" class="border-t border-ink/10">
+  <div class="mx-auto max-w-5xl px-6 py-16 md:py-20">
+    <div class="mb-8 flex items-baseline justify-between gap-4">
+      <h2 class="text-2xl font-semibold tracking-tight md:text-3xl">Selected work</h2>
+      <a
+        href="https://github.com/Pavithra-51204?tab=repositories"
+        class="font-mono text-xs text-ink/65 hover:text-signal"
+      >
+        all repositories
+      </a>
+    </div>
+
+    <ul class="divide-y divide-ink/10 border-y border-ink/10">
+      {projects.map((project) => (
+        <li>
+          <a href={`/projects/${project.data.id}/`} class="group block py-5">
+            <div class="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
+              <h3 class="text-lg font-medium text-ink underline decoration-transparent underline-offset-4 transition-colors group-hover:text-signal group-hover:decoration-signal">
+                {project.data.name}
+              </h3>
+              {project.data.outcome && (
+                <span class="shrink-0 font-mono text-xs text-ink/65">{project.data.outcome}</span>
+              )}
+            </div>
+            <p class="mt-1.5 max-w-2xl text-sm leading-relaxed text-ink/70">
+              {project.data.summary}
+            </p>
+            <div class="mt-3 flex flex-wrap gap-1.5">
+              {project.data.stack.map((tech) => (
+                <span class="border border-ink/15 px-1.5 py-0.5 font-mono text-[11px] text-ink/65">
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

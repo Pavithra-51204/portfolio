@@ -1,0 +1,40 @@
+---
+import { site } from '../data/site';
+
+const navItems = [
+  { href: '/#work', label: 'Work' },
+  { href: '/#experience', label: 'Experience' },
+  { href: '/#research', label: 'Research' },
+  { href: '/#skills', label: 'Skills' },
+  { href: '/#about', label: 'About' },
+  { href: '/#contact', label: 'Contact' },
+];
+---
+
+<header class="border-b border-ink/10">
+  <div class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-4">
+    <a href="/" class="font-mono text-sm tracking-tight text-ink hover:text-signal">
+      pavithra manogaran
+    </a>
+    <nav aria-label="Primary" class="hidden items-center gap-5 font-mono text-sm md:flex">
+      {navItems.map((item) => (
+        <a href={item.href} class="text-ink/70 transition-colors hover:text-signal">
+          {item.label}
+        </a>
+      ))}
+    </nav>
+    <a
+      href={site.resumeUrl}
+      class="shrink-0 border border-ink/20 px-3 py-1.5 font-mono text-xs text-ink transition-colors hover:border-signal hover:text-signal"
+    >
+      resume.pdf
+    </a>
+  </div>
+  <nav aria-label="Primary, mobile" class="flex flex-wrap gap-x-4 gap-y-2 border-t border-ink/10 px-6 py-2 font-mono text-xs md:hidden">
+    {navItems.map((item) => (
+      <a href={item.href} class="text-ink/70 hover:text-signal">
+        {item.label}
+      </a>
+    ))}
+  </nav>
+</header>

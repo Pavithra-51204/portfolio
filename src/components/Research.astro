@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+
+const publications = (await getCollection('publications')).sort((a, b) => a.data.order - b.data.order);
+const patents = (await getCollection('patents')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<section id="research" class="border-t border-ink/10">
+  <div class="mx-auto max-w-5xl px-6 py-16 md:py-20">
+    <h2 class="mb-8 text-2xl font-semibold tracking-tight md:text-3xl">Research</h2>
+
+    <div class="grid gap-12 md:grid-cols-2">
+      <div>
+        <h3 class="mb-4 font-mono text-xs text-ink/65">publications</h3>
+        <ul class="space-y-6">
+          {publications.map((pub) => (
+            <li>
+              {pub.data.url ? (
+                <a
+                  href={pub.data.url}
+                  class="text-base font-medium leading-snug text-ink underline decoration-transparent underline-offset-4 hover:text-signal hover:decoration-signal"
+                >
+                  {pub.data.title}
+                </a>
+              ) : (
+                <span class="text-base font-medium leading-snug text-ink">{pub.data.title}</span>
+              )}
+              <p class="mt-1 font-mono text-xs text-ink/65">{pub.data.venue}</p>
+              <p class="mt-2 text-sm leading-relaxed text-ink/70">{pub.data.summary}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="mb-4 font-mono text-xs text-ink/65">patents</h3>
+        <ul class="space-y-6">
+          {patents.map((patent) => (
+            <li>
+              <span class="text-base font-medium leading-snug text-ink">{patent.data.title}</span>
+              <p class="mt-1 font-mono text-xs text-ink/65">
+                Indian Patent Application No. {patent.data.applicationNumber} &middot; {patent.data.status} {patent.data.publishedDate}
+              </p>
+              <p class="mt-2 text-sm leading-relaxed text-ink/70">{patent.data.summary}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,60 @@
+---
+import { education, certifications, extracurricular } from '../data/site';
+---
+
+<section id="about" class="border-t border-ink/10">
+  <div class="mx-auto max-w-5xl px-6 py-16 md:py-20">
+    <h2 class="mb-8 text-2xl font-semibold tracking-tight md:text-3xl">About</h2>
+
+    <div class="grid gap-10 lg:grid-cols-[220px_1fr] lg:gap-14">
+      <img
+        src="/images/pavithra-profile.png"
+        alt="Portrait of Pavithra Manogaran"
+        width="220"
+        height="220"
+        loading="lazy"
+        class="h-56 w-56 rounded-full object-cover"
+      />
+
+      <div class="flex flex-col gap-10">
+        <div>
+          <h3 class="mb-3 font-mono text-xs text-ink/65">education</h3>
+          <ul class="space-y-3">
+            {education.map((item) => (
+              <li class="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
+                <div>
+                  <p class="text-sm font-medium text-ink">{item.school}</p>
+                  <p class="text-sm text-ink/70">{item.program}</p>
+                </div>
+                <p class="shrink-0 font-mono text-xs text-ink/65">
+                  {item.start ? `${item.start}–${item.end}` : item.end} &middot; {item.detail}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="mb-3 font-mono text-xs text-ink/65">certifications</h3>
+          <div class="flex flex-wrap gap-1.5">
+            {certifications.map((cert) => (
+              <span class="border border-ink/15 px-2 py-1 font-mono text-xs text-ink/75">{cert}</span>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <h3 class="mb-3 font-mono text-xs text-ink/65">extracurricular</h3>
+          <ul class="space-y-1.5 text-sm leading-relaxed text-ink/75">
+            {extracurricular.map((item) => (
+              <li class="flex gap-2">
+                <span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-ink/30"></span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

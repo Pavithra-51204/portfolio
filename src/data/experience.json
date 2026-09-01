@@ -1,0 +1,52 @@
+[
+  {
+    "id": "kaar-technologies",
+    "role": "SAP Analyst Intern",
+    "org": "Kaar Technologies",
+    "location": "On-site",
+    "start": "Feb 2026",
+    "end": "Present",
+    "outcome": "Turned AI adoption into a measured ROI conversation with live customers, not a pilot deck.",
+    "bullets": [
+      "Identified high-impact AI use cases across live customer SAP projects to demonstrate measurable business value for clients.",
+      "Measured and reported time and cost savings from AI adoption, giving stakeholders concrete ROI insights instead of estimates.",
+      "Completed training across SAP technical and functional modules, building hands-on knowledge of core business processes.",
+      "Served as a key liaison between customers and the product team to strengthen engagement, health, and retention."
+    ],
+    "order": 1
+  },
+  {
+    "id": "g5infotech",
+    "role": "Cloud / SRE / DevOps & GenAI Deep Dive Intern",
+    "org": "G5Infotech",
+    "location": "Remote",
+    "start": "May 2025",
+    "end": "Aug 2025",
+    "outcome": "Shipped a cloud-based financial tracker with GenAI-driven spending insights, run with real SRE practices.",
+    "bullets": [
+      "Designed and built a cloud-based financial tracker on AWS for scalable, reliable expense management.",
+      "Integrated GenAI capabilities to analyze user spending patterns and generate financial insights.",
+      "Applied SRE practices — monitoring, logging, and automated alerting — to keep the system reliable in production."
+    ],
+    "evidence": {
+      "label": "fintrack on GitHub",
+      "url": "https://github.com/Pavithra-51204/fintrack"
+    },
+    "order": 2
+  },
+  {
+    "id": "hiaido-cloud-automation",
+    "role": "Cloud Engineer Intern",
+    "org": "HiAiDo Cloud Automation Pvt. Ltd.",
+    "location": "Remote",
+    "start": "Sept 2024",
+    "end": "March 2025",
+    "outcome": "Automated infrastructure provisioning and a CloudTrail logging pipeline end to end with Terraform.",
+    "bullets": [
+      "Built a logging pipeline using Terraform and AWS services to collect, store, and process CloudTrail logs for monitoring and analysis.",
+      "Designed and implemented automated infrastructure provisioning to manage and deploy cloud resources.",
+      "Developed a chatbot for code generation and review to speed up the development workflow."
+    ],
+    "order": 3
+  }
+]

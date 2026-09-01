@@ -1,0 +1,18 @@
+[
+  {
+    "id": "electricity-theft-detection",
+    "title": "Agentic AI-Powered Electricity Theft Detection Using Temporal Convolution Networks and Context-Aware Reasoning",
+    "venue": "IEEE Xplore",
+    "summary": "A hybrid framework using Temporal Convolutional Networks to analyze smart-meter time-series data, with a context-aware module that uses historical and seasonal patterns to reduce false positives and produce accurate theft-risk predictions.",
+    "url": "https://ieeexplore.ieee.org/document/11496405",
+    "order": 1
+  },
+  {
+    "id": "flood-forecasting-fusion",
+    "title": "An Agentic AI Framework for Dynamic Data Fusion in Flood Forecasting",
+    "venue": "IEEE Xplore",
+    "summary": "A multi-agent system using an LLM to fuse LSTM, DeepLabv3+, and DistilBERT outputs across time-series, satellite, and social-media data, dynamically reweighting each model by performance — achieving 93.5% accuracy and 0.96 AUC-ROC, a 3% improvement over static averaging.",
+    "url": "https://ieeexplore.ieee.org/document/11394670",
+    "order": 2
+  }
+]

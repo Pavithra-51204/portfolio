@@ -1,0 +1,156 @@
+[
+  {
+    "id": "agentforge",
+    "name": "AgentForge",
+    "tagline": "Prompt-to-agent workspace",
+    "summary": "Turns a plain-English description into a schema-validated agent specification, then runs it through a LangGraph plan → act → observe → reflect loop against real tools over MCP — with per-project isolation for chats, agents, knowledge bases, and memory.",
+    "outcome": "agents run against real tools over MCP, not mocked",
+    "featured": true,
+    "order": 1,
+    "stack": ["LangGraph", "MCP", "FastAPI", "Next.js", "Postgres", "Chroma"],
+    "repoUrl": "https://github.com/Pavithra-51204/agentforge",
+    "isFork": false,
+    "detail": {
+      "problem": "Building an agent today usually means hand-writing a spec, wiring tool integrations by hand, and hoping the LLM's stated capabilities actually match what it can do. AgentForge collapses that into one flow: describe the agent in a sentence, get a JSON Schema-validated spec back, and catch capability mismatches before anything runs — via a semantic checker that flags cases where the spec claims a capability it doesn't actually need.",
+      "architectureNotes": [
+        "Meta-agent pipeline: prompt → local LLM (Ollama) → structured Agent Spec → schema validation with retry-on-malformed-output → semantic capability check.",
+        "Unresolved details (a missing URL, a missing recipient) surface as inline, answerable fields rather than a dead-end error list.",
+        "Execution runs through a LangGraph plan → act → observe → reflect loop, calling real tools over MCP (Model Context Protocol) tool servers.",
+        "Every layer — MCP tool servers, the FastAPI control plane, the Next.js frontend, Postgres, Redis, and Ollama — runs as an independently deployable process wired together over HTTP.",
+        "Projects are isolated containers: each has its own chats, agents, Chroma-backed knowledge base, and persistent cross-run agent memory."
+      ],
+      "highlights": [
+        "Semantic checker catches spec/capability mismatches an LLM would otherwise silently hallucinate past.",
+        "Agents can be edited and re-saved as new versions, or exported as a standalone, self-contained Docker bundle.",
+        "Full step-by-step run traces are persisted alongside a human-readable summary of what a run actually produced."
+      ]
+    }
+  },
+  {
+    "id": "velocitylb",
+    "name": "VelocityLB",
+    "tagline": "Adaptive Layer-7 load balancer",
+    "summary": "A Layer-7 load balancer built from scratch in Go, implementing four routing strategies — round-robin, least-connections, Power of Two Choices, and EWMA latency-aware routing — with active/passive health checking, AIMD concurrency limiting, and an empirical benchmark harness.",
+    "outcome": "p99 503ms → 94ms — a 5–7x improvement over round-robin",
+    "featured": true,
+    "order": 2,
+    "stack": ["Go", "Prometheus", "Grafana", "Docker Compose"],
+    "repoUrl": "https://github.com/Pavithra-51204/velocitylb",
+    "isFork": false,
+    "detail": {
+      "problem": "One backend was given 500ms of artificial latency while two others stayed healthy. Round-robin — which routes purely by turn-taking with no awareness of backend state — kept sending it a full third of all traffic regardless, dragging p99 to 503ms. Every adaptive strategy kept p99 under 100ms instead: least-connections at 66ms, P2C at 87ms, EWMA at 98ms.",
+      "architectureNotes": [
+        "cmd/lb runs the load balancer; cmd/mockbackend is a configurable test backend (artificial delay, failure rate); cmd/loadgen is a concurrent load generator producing per-request CSV output.",
+        "internal/backend tracks atomic connection counts, EWMA latency, and an AIMD concurrency limiter per backend; internal/proxy implements the Strategy interface behind all four routing algorithms.",
+        "A Server-Sent-Events layer (internal/broadcast) drives a live traffic-visualization dashboard.",
+        "Python analysis scripts compute p50/p95/p99 and generate comparison charts from the benchmark CSVs; a Docker Compose stack runs Prometheus + Grafana for live observability."
+      ],
+      "highlights": [
+        "P2C (Power of Two Choices) samples 2 of N backends and routes to whichever has fewer active connections — the same technique used internally by Envoy and HAProxy.",
+        "EWMA routing tracks a rolling average response time per backend and combines it with P2C-style sampling — the same approach as Envoy's PeakEWMA balancer.",
+        "The full benchmark sweep (3 scenarios × 4 strategies) and chart generation is scripted end-to-end, not run and recorded by hand."
+      ]
+    }
+  },
+  {
+    "id": "autonomous-sre-engine",
+    "name": "Autonomous Site Reliability Engine",
+    "tagline": "Self-healing Kubernetes reliability system",
+    "summary": "A multi-agent system that watches a Kubernetes cluster, diagnoses real incidents using RAG grounded in a curated knowledge base of known failure modes, and generates and verifies remediation commands — closing the loop without a human in it.",
+    "outcome": "detect → diagnose → remediate → verify, autonomously",
+    "featured": true,
+    "order": 3,
+    "stack": ["Python", "Kubernetes", "Ollama", "Qdrant", "RAG"],
+    "repoUrl": "https://github.com/Pavithra-51204/A-Sre",
+    "isFork": false,
+    "detail": {
+      "problem": "Most self-healing setups either script a fixed set of remediations or hand root-cause analysis entirely to an LLM with no grounding — meaning it can confidently generate a plausible-sounding fix for the wrong problem. This project splits the work across dedicated agents and grounds diagnosis in a real knowledge base of Kubernetes failure modes rather than raw LLM guesswork.",
+      "architectureNotes": [
+        "A monitor/watchdog process continuously observes cluster state and hands off detected anomalies.",
+        "A diagnostic agent performs RAG (agents/diagnostic/rag.py) over a curated knowledge base of Kubernetes issues (knowledge/k8s_issues.txt, populated via ingest.py) using local Ollama models to identify root causes.",
+        "A remediation agent generates the actual recovery commands; a separate verification agent confirms the fix worked rather than trusting that a command merely ran.",
+        "orchestrator.py coordinates the full detect → diagnose → remediate → verify loop across all four agents; the stack runs via docker-compose."
+      ],
+      "highlights": [
+        "Root-cause analysis is grounded in a curated incident knowledge base via RAG on Qdrant, not an ungrounded LLM guess.",
+        "Diagnosis, remediation, and verification are separate agents with distinct responsibilities rather than one model doing everything.",
+        "The verification step is a first-class stage of the loop, not an afterthought — a fix isn't considered done until it's confirmed."
+      ]
+    }
+  },
+  {
+    "id": "greenml",
+    "name": "GreenML",
+    "tagline": "Energy-efficient AutoML framework",
+    "summary": "An AutoML framework that treats power draw as a first-class optimization target alongside accuracy, using real-time CPU/GPU energy measurements to pick model configurations that are actually deployable on low-power and edge hardware.",
+    "outcome": "balances F1/precision against measured watts, not just FLOPs",
+    "featured": true,
+    "order": 4,
+    "stack": ["Python", "AutoGluon", "scikit-learn"],
+    "repoUrl": "https://github.com/Pavithra-51204/GreenML",
+    "isFork": false,
+    "detail": {
+      "problem": "Standard AutoML frameworks select models purely on accuracy metrics, which routinely produces winners that are far too power-hungry to run on edge or low-power hardware. GreenML folds real-time energy measurement into the same optimization loop as accuracy, so the model that wins is one that's actually deployable.",
+      "architectureNotes": [
+        "Trains and compares multiple model families (ExtraTrees, RandomForest, k-nearest-neighbors, and a weighted ensemble) via AutoGluon as the underlying AutoML engine.",
+        "Wraps model selection with a resource-monitoring layer that records real-time CPU/GPU power draw per training/inference run.",
+        "Balances accuracy metrics (F1-score, precision) against measured energy cost rather than optimizing accuracy alone."
+      ],
+      "highlights": [
+        "Resource monitoring is integrated directly into the model-selection loop, not bolted on as a post-hoc report.",
+        "Model pruning and a preference for lightweight architectures make the winning configuration deployable on low-power and edge devices.",
+        "Surfaces an explicit accuracy-vs-energy tradeoff per configuration instead of a single accuracy leaderboard."
+      ]
+    }
+  },
+  {
+    "id": "ops-center",
+    "name": "Ops-Center",
+    "tagline": "Real-time enterprise war room",
+    "summary": "A cloud-native incident-response platform — live incident streaming, instant task updates, and role-based collaboration over WebSockets, built to be the single screen a team looks at during a critical event.",
+    "outcome": "horizontally scalable real-time layer via Redis pub/sub",
+    "featured": true,
+    "order": 5,
+    "stack": ["React", "Vite", "Node.js", "Express", "Socket.io", "MongoDB", "Redis"],
+    "repoUrl": "https://github.com/Pavithra-51204/ops-center",
+    "liveUrl": "https://ops-center-six.vercel.app",
+    "isFork": false,
+    "detail": {
+      "problem": "Incident response for a distributed team usually means a fragmented Slack thread and no single source of truth for who's doing what. Ops-Center is a dedicated war room: live incident state, task tracking, and chat in one role-gated view, updated instantly for everyone watching.",
+      "architectureNotes": [
+        "React + Vite + Tailwind client with dedicated room/chat/action-tracker components and useAuth/useSocket/useRoom hooks over an AuthContext/SocketContext pair.",
+        "Node.js + Express server with MongoDB (Mongoose) models for users, rooms, and messages, JWT auth over HTTP-only cookies, and Socket.io for the real-time transport.",
+        "Redis pub/sub sits behind Socket.io so events broadcast correctly across multiple server instances — the real-time layer is horizontally scalable from the start, not bolted on for a single process."
+      ],
+      "highlights": [
+        "Role-based access control governs who can act during a live incident, not just who can view it.",
+        "This is the second, deployed iteration of the concept — an earlier prototype (war-room-devops) proved the real-time architecture before this version was rebuilt and shipped live."
+      ]
+    }
+  },
+  {
+    "id": "quota-policy-sandbox",
+    "name": "Quota Policy Sandbox",
+    "tagline": "RL-based resource policy testing",
+    "summary": "Tests whether a proposed resource-allocation policy — API rate limits, compute quotas — holds up fairly before it ships, by training independent reinforcement-learning agents that learn to work the policy rather than following a fixed script.",
+    "outcome": "isolates what actually drives fair vs. unfair outcomes",
+    "featured": true,
+    "order": 6,
+    "stack": ["Python", "PettingZoo", "Stable-Baselines3", "FastAPI", "Next.js"],
+    "repoUrl": "https://github.com/Pavithra-51204/quota-sandbox",
+    "isFork": false,
+    "detail": {
+      "problem": "Multi-tenant systems that cap a shared resource risk letting a few aggressive tenants dominate usage while others are starved — and testing a proposed cap in production is slow, risky, and sometimes irreversible once real tenants adapt around it. This project stress-tests a policy against agents that genuinely learn how to behave under it, before it's ever deployed for real.",
+      "architectureNotes": [
+        "A shared resource pool that depletes as tenants draw from it and regenerates over time, built as a PettingZoo multi-agent environment.",
+        "Each tenant is modeled as an independent agent trained with PPO via Stable-Baselines3 + SuperSuit — no coordination is hardcoded; cooperative or greedy behavior emerges purely from each agent maximizing its own reward.",
+        "Population size, overuse penalties, and inter-tenant visibility are varied one at a time, averaged across multiple random seeds, to isolate what actually drives fair vs. unfair outcomes.",
+        "A verdict engine translates a proposed policy configuration into a plain-language verdict backed by the measured experimental results; a FastAPI backend serves it to a Next.js frontend where a user configures a policy and compares it against an alternative."
+      ],
+      "highlights": [
+        "Fairness or unfairness emerges from what each agent learns to maximize, not from a scripted behavior model.",
+        "The verdict is backed by controlled, seeded experiments rather than a single anecdotal run."
+      ]
+    }
+  }
+]

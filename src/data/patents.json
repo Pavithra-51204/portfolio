@@ -1,0 +1,20 @@
+[
+  {
+    "id": "cloudsecagent",
+    "title": "CloudSecAgent: Secure AI Agent Framework for Cloud Security Compliance",
+    "applicationNumber": "202641031745",
+    "status": "Application published",
+    "publishedDate": "27 Mar 2026",
+    "summary": "A framework for AI agents operating in cloud environments that enforces security-compliance constraints on agent actions.",
+    "order": 1
+  },
+  {
+    "id": "ai-career-guidance-nep2020",
+    "title": "AI-Powered Career Guidance Aligned with NEP 2020: A Personalized and Scalable Platform for Students",
+    "applicationNumber": "202541128458",
+    "status": "Application published",
+    "publishedDate": "20 Feb 2026",
+    "summary": "A personalized, scalable career-guidance platform for students, aligned with India's National Education Policy 2020.",
+    "order": 2
+  }
+]

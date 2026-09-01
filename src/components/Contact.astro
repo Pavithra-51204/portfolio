@@ -1,0 +1,80 @@
+---
+import { site } from '../data/site';
+---
+
+<section id="contact" class="border-t border-ink/10 bg-panel-dark text-paper">
+  <div class="mx-auto max-w-5xl px-6 py-16 md:py-20">
+    <div class="grid gap-10 lg:grid-cols-2 lg:gap-16">
+      <div>
+        <h2 class="text-2xl font-semibold tracking-tight md:text-3xl">Contact</h2>
+        <p class="mt-4 max-w-sm text-sm leading-relaxed text-paper/75">
+          The fastest way to reach me is email. If you'd rather send a note directly from here,
+          use the form &mdash; it goes straight to my inbox.
+        </p>
+        <div class="mt-6 flex flex-col gap-2 font-mono text-sm">
+          <a href={`mailto:${site.email}`} class="text-paper hover:text-signal">{site.email}</a>
+          <a href={site.links.linkedin} class="text-paper/70 hover:text-signal">LinkedIn</a>
+          <a href={site.links.github} class="text-paper/70 hover:text-signal">GitHub</a>
+          <a href={site.links.medium} class="text-paper/70 hover:text-signal">Medium</a>
+          <a href={site.resumeUrl} class="text-paper/70 hover:text-signal">resume.pdf</a>
+        </div>
+      </div>
+
+      <form
+        name="contact"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        action="/thank-you/"
+        class="flex flex-col gap-4"
+      >
+        <input type="hidden" name="form-name" value="contact" />
+        <p class="hidden">
+          <label>
+            Don't fill this out if you're human: <input name="bot-field" />
+          </label>
+        </p>
+
+        <div class="flex flex-col gap-1.5">
+          <label for="name" class="font-mono text-xs text-paper/60">name</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            required
+            class="border border-paper/25 bg-transparent px-3 py-2 text-sm text-paper outline-none focus-visible:border-signal"
+          />
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label for="email" class="font-mono text-xs text-paper/60">email</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            class="border border-paper/25 bg-transparent px-3 py-2 text-sm text-paper outline-none focus-visible:border-signal"
+          />
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label for="message" class="font-mono text-xs text-paper/60">message</label>
+          <textarea
+            id="message"
+            name="message"
+            rows="4"
+            required
+            class="border border-paper/25 bg-transparent px-3 py-2 text-sm text-paper outline-none focus-visible:border-signal"
+          ></textarea>
+        </div>
+
+        <button
+          type="submit"
+          class="self-start border border-paper/30 px-4 py-2 font-mono text-sm text-paper transition-colors hover:border-signal hover:text-signal"
+        >
+          send
+        </button>
+      </form>
+    </div>
+  </div>
+</section>

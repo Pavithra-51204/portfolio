@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import SelectedWork from '../components/SelectedWork.astro';
+import ExperienceTimeline from '../components/ExperienceTimeline.astro';
+import Research from '../components/Research.astro';
+import Skills from '../components/Skills.astro';
+import About from '../components/About.astro';
+import Contact from '../components/Contact.astro';
+import { site } from '../data/site';
+
+const publications = await getCollection('publications');
+
+const scholarlyArticles = publications
+  .filter((pub) => pub.data.url)
+  .map((pub) => ({
+    '@type': 'ScholarlyArticle',
+    headline: pub.data.title,
+    abstract: pub.data.summary,
+    url: pub.data.url,
+    author: { '@type': 'Person', name: site.name },
+  }));
+---
+
+<Layout
+  title="Pavithra Manogaran — Systems & AI Engineer"
+  description={site.description}
+  jsonLd={scholarlyArticles}
+>
+  <Hero />
+  <SelectedWork />
+  <ExperienceTimeline />
+  <Research />
+  <Skills />
+  <About />
+  <Contact />
+</Layout>
