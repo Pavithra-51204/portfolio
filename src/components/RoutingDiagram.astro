@@ -1,0 +1,52 @@
+---
+---
+
+<figure class="flex flex-col gap-4">
+  <svg
+    viewBox="0 0 640 280"
+    role="img"
+    aria-label="Adaptive request routing, from VelocityLB: a client sends requests to three backend nodes. Node A and Node C are healthy with p99 latency of 41ms and 38ms. Node B is degraded at 503ms latency and is routed around."
+    class="w-full"
+  >
+    <!-- client -->
+    <g>
+      <circle cx="60" cy="140" r="26" fill="none" stroke="#14181D" stroke-opacity="0.4" stroke-width="1.5" />
+      <text x="60" y="145" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#14181D">client</text>
+    </g>
+
+    <!-- paths -->
+    <path d="M 86 140 C 150 80, 220 60, 300 55" fill="none" stroke="#4C9A6A" stroke-width="1.5" />
+    <path d="M 86 140 L 300 140" fill="none" stroke="#C97A3D" stroke-width="1.5" stroke-dasharray="4 5" />
+    <path d="M 86 140 C 150 200, 220 220, 300 225" fill="none" stroke="#4C9A6A" stroke-width="1.5" />
+
+    <!-- node A: healthy -->
+    <g>
+      <rect x="300" y="30" width="180" height="50" rx="2" fill="none" stroke="#14181D" stroke-opacity="0.2" stroke-width="1.5" />
+      <circle cx="316" cy="55" r="4" fill="#4C9A6A" />
+      <text x="330" y="50" font-family="IBM Plex Mono, monospace" font-size="12" fill="#14181D">node A &middot; healthy</text>
+      <text x="330" y="67" font-family="IBM Plex Mono, monospace" font-size="12" fill="#14181D" fill-opacity="0.7">p99 41ms</text>
+    </g>
+
+    <!-- node B: degraded -->
+    <g>
+      <rect x="300" y="115" width="180" height="50" rx="2" fill="none" stroke="#14181D" stroke-opacity="0.2" stroke-width="1.5" />
+      <circle cx="316" cy="140" r="4" fill="#C97A3D" />
+      <text x="330" y="135" font-family="IBM Plex Mono, monospace" font-size="12" fill="#14181D">node B &middot; degraded</text>
+      <text x="330" y="152" font-family="IBM Plex Mono, monospace" font-size="12" fill="#14181D" fill-opacity="0.7">p99 503ms &mdash; avoided</text>
+    </g>
+
+    <!-- node C: healthy -->
+    <g>
+      <rect x="300" y="200" width="180" height="50" rx="2" fill="none" stroke="#14181D" stroke-opacity="0.2" stroke-width="1.5" />
+      <circle cx="316" cy="225" r="4" fill="#4C9A6A" />
+      <text x="330" y="220" font-family="IBM Plex Mono, monospace" font-size="12" fill="#14181D">node C &middot; healthy</text>
+      <text x="330" y="237" font-family="IBM Plex Mono, monospace" font-size="12" fill="#14181D" fill-opacity="0.7">p99 38ms</text>
+    </g>
+  </svg>
+
+  <blockquote class="border-l-2 border-signal/60 pl-4 font-mono text-xs leading-relaxed text-ink/70">
+    &ldquo;Adaptive routing held p99 under 100ms while round-robin hit 503ms &mdash; a 5&ndash;7x
+    difference.&rdquo;
+    <footer class="mt-1 text-ink/65">&mdash; VelocityLB, live benchmark</footer>
+  </blockquote>
+</figure>

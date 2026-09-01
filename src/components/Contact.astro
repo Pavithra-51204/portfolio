@@ -24,9 +24,11 @@ import { site } from '../data/site';
         name="contact"
         method="POST"
         data-netlify="true"
-        netlify-honeypot="bot-field"
+        data-netlify-honeypot="bot-field"
         action="/thank-you/"
+        novalidate
         class="flex flex-col gap-4"
+        id="contact-form"
       >
         <input type="hidden" name="form-name" value="contact" />
         <p class="hidden">
@@ -42,8 +44,10 @@ import { site } from '../data/site';
             name="name"
             type="text"
             required
-            class="border border-paper/25 bg-transparent px-3 py-2 text-sm text-paper outline-none focus-visible:border-signal"
+            aria-describedby="name-error"
+            class="border border-paper/25 bg-transparent px-3 py-2 text-sm text-paper outline-none focus-visible:border-signal [&[aria-invalid='true']]:border-warn"
           />
+          <p id="name-error" class="hidden font-mono text-xs text-warn" role="alert"></p>
         </div>
 
         <div class="flex flex-col gap-1.5">
@@ -53,8 +57,10 @@ import { site } from '../data/site';
             name="email"
             type="email"
             required
-            class="border border-paper/25 bg-transparent px-3 py-2 text-sm text-paper outline-none focus-visible:border-signal"
+            aria-describedby="email-error"
+            class="border border-paper/25 bg-transparent px-3 py-2 text-sm text-paper outline-none focus-visible:border-signal [&[aria-invalid='true']]:border-warn"
           />
+          <p id="email-error" class="hidden font-mono text-xs text-warn" role="alert"></p>
         </div>
 
         <div class="flex flex-col gap-1.5">
@@ -64,8 +70,10 @@ import { site } from '../data/site';
             name="message"
             rows="4"
             required
-            class="border border-paper/25 bg-transparent px-3 py-2 text-sm text-paper outline-none focus-visible:border-signal"
+            aria-describedby="message-error"
+            class="border border-paper/25 bg-transparent px-3 py-2 text-sm text-paper outline-none focus-visible:border-signal [&[aria-invalid='true']]:border-warn"
           ></textarea>
+          <p id="message-error" class="hidden font-mono text-xs text-warn" role="alert"></p>
         </div>
 
         <button
@@ -78,3 +86,61 @@ import { site } from '../data/site';
     </div>
   </div>
 </section>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  if (form) {
+    const fields = ['name', 'email', 'message'] as const;
+
+    const messageFor = (input: HTMLInputElement | HTMLTextAreaElement): string => {
+      if (input.validity.valueMissing) return 'This field is required.';
+      if (input.validity.typeMismatch && input.type === 'email') {
+        return 'Enter a valid email address.';
+      }
+      return 'Please check this field.';
+    };
+
+    const setError = (name: string, message: string | null) => {
+      const input = form.elements.namedItem(name) as HTMLInputElement | HTMLTextAreaElement | null;
+      const errorEl = document.getElementById(`${name}-error`);
+      if (!input || !errorEl) return;
+
+      if (message) {
+        input.setAttribute('aria-invalid', 'true');
+        errorEl.textContent = message;
+        errorEl.classList.remove('hidden');
+      } else {
+        input.removeAttribute('aria-invalid');
+        errorEl.textContent = '';
+        errorEl.classList.add('hidden');
+      }
+    };
+
+    const validateField = (name: string): boolean => {
+      const input = form.elements.namedItem(name) as HTMLInputElement | HTMLTextAreaElement | null;
+      if (!input) return true;
+      const valid = input.checkValidity();
+      setError(name, valid ? null : messageFor(input));
+      return valid;
+    };
+
+    for (const name of fields) {
+      const input = form.elements.namedItem(name) as HTMLInputElement | HTMLTextAreaElement | null;
+      input?.addEventListener('input', () => {
+        if (input.getAttribute('aria-invalid') === 'true') validateField(name);
+      });
+      input?.addEventListener('blur', () => validateField(name));
+    }
+
+    form.addEventListener('submit', (event) => {
+      const results = fields.map((name) => validateField(name));
+      if (results.includes(false)) {
+        event.preventDefault();
+        const firstInvalid = fields.find((_, i) => !results[i]);
+        if (firstInvalid) {
+          (form.elements.namedItem(firstInvalid) as HTMLElement | null)?.focus();
+        }
+      }
+    });
+  }
+</script>
