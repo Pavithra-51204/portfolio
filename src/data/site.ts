@@ -18,7 +18,7 @@ export const education = [
     id: 'sjce',
     school: "St. Joseph's College of Engineering",
     program: 'B.E. Computer Science and Engineering',
-    detail: 'CGPA 8.94',
+    detail: 'CGPA 8.93',
     start: '2022',
     end: '2026',
   },
