@@ -1,13 +1,15 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
 import SelectedWork from '../components/SelectedWork.astro';
 import ExperienceTimeline from '../components/ExperienceTimeline.astro';
 import Research from '../components/Research.astro';
 import Skills from '../components/Skills.astro';
-import About from '../components/About.astro';
 import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
 import { site } from '../data/site';
 
 const publications = await getCollection('publications');
@@ -28,11 +30,228 @@ const scholarlyArticles = publications
   description={site.description}
   jsonLd={scholarlyArticles}
 >
-  <Hero />
-  <About />
-  <SelectedWork />
-  <ExperienceTimeline />
-  <Research />
-  <Skills />
-  <Contact />
+  <Header />
+  <main id="main" style="padding-top: 64px;">
+    <Hero />
+    <About />
+    <SelectedWork />
+    <ExperienceTimeline />
+    <Research />
+    <Skills />
+    <Contact />
+    <Footer />
+  </main>
 </Layout>
+
+<!-- Command palette (Cmd/Ctrl+K) -->
+<div
+  id="cmd-overlay"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Command palette"
+  style="
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 15vh;
+    background: rgba(9,10,15,0.6);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  "
+>
+  <div
+    id="cmd-panel"
+    style="
+      width: min(560px, 90vw);
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      transform: translateY(-8px);
+      transition: transform 0.2s;
+    "
+  >
+    <div style="
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.875rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+    ">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-tertiary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input
+        id="cmd-input"
+        type="text"
+        placeholder="Jump to section or project…"
+        autocomplete="off"
+        style="
+          flex: 1;
+          background: none;
+          border: none;
+          outline: none;
+          font-family: var(--font-mono);
+          font-size: 0.875rem;
+          color: var(--text-primary);
+        "
+      />
+      <kbd style="
+        font-family: var(--font-mono);
+        font-size: 0.625rem;
+        color: var(--text-tertiary);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.1rem 0.4rem;
+      ">esc</kbd>
+    </div>
+    <ul id="cmd-list" role="listbox" aria-label="Jump to section or project" style="
+      list-style: none;
+      margin: 0;
+      padding: 0.5rem 0;
+      max-height: 320px;
+      overflow-y: auto;
+    "></ul>
+    <div style="
+      padding: 0.625rem 1.25rem;
+      border-top: 1px solid var(--border);
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      color: var(--text-tertiary);
+      display: flex;
+      gap: 1rem;
+    ">
+      <span>↑↓ navigate</span>
+      <span>↵ open</span>
+      <span>esc close</span>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var items = [
+      { label: 'About',      href: '#about' },
+      { label: 'Projects',   href: '#projects' },
+      { label: 'Experience', href: '#experience' },
+      { label: 'Research',   href: '#research' },
+      { label: 'Skills',     href: '#skills' },
+      { label: 'Contact',    href: '#contact' },
+      { label: 'AgentForge',          href: '/projects/agentforge/' },
+      { label: 'VelocityLB',          href: '/projects/velocitylb/' },
+      { label: 'Autonomous SRE Engine',href: '/projects/autonomous-sre-engine/' },
+      { label: 'GreenML',              href: '/projects/greenml/' },
+      { label: 'Ops-Center',           href: '/projects/ops-center/' },
+      { label: 'Quota Policy Sandbox', href: '/projects/quota-policy-sandbox/' },
+      { label: 'Resume',     href: '/Pavithra_Manogaran_Resume.pdf' },
+    ];
+
+    var overlay  = document.getElementById('cmd-overlay');
+    var panel    = document.getElementById('cmd-panel');
+    var input    = document.getElementById('cmd-input');
+    var list     = document.getElementById('cmd-list');
+    var open     = false;
+    var active   = -1;
+    var filtered = items;
+
+    function renderList(arr) {
+      list.innerHTML = '';
+      arr.forEach(function (item, i) {
+        var li = document.createElement('li');
+        li.setAttribute('role', 'option');
+        li.setAttribute('aria-selected', 'false');
+        li.style.cssText = 'padding:0.6rem 1.25rem;cursor:pointer;font-family:var(--font-mono);font-size:0.8rem;color:var(--text-secondary);transition:background 0.1s,color 0.1s;';
+        li.textContent = item.label;
+        li.dataset.href = item.href;
+        li.addEventListener('mouseenter', function () { setActive(i); });
+        li.addEventListener('click', function () { navigate(item.href); });
+        list.appendChild(li);
+      });
+    }
+
+    function setActive(i) {
+      active = i;
+      Array.from(list.children).forEach(function (li, idx) {
+        if (idx === i) {
+          li.style.background = 'color-mix(in srgb, var(--accent) 10%, transparent)';
+          li.style.color = 'var(--accent)';
+          li.setAttribute('aria-selected', 'true');
+        } else {
+          li.style.background = '';
+          li.style.color = 'var(--text-secondary)';
+          li.setAttribute('aria-selected', 'false');
+        }
+      });
+    }
+
+    function navigate(href) {
+      closeCmd();
+      if (href.startsWith('#')) {
+        var el = document.querySelector(href);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        window.location.href = href;
+      }
+    }
+
+    function openCmd() {
+      open = true;
+      filtered = items;
+      renderList(filtered);
+      active = -1;
+      overlay.style.opacity = '1';
+      overlay.style.pointerEvents = 'auto';
+      panel.style.transform = 'translateY(0)';
+      input.value = '';
+      input.focus();
+    }
+
+    function closeCmd() {
+      open = false;
+      overlay.style.opacity = '0';
+      overlay.style.pointerEvents = 'none';
+      panel.style.transform = 'translateY(-8px)';
+    }
+
+    // Keyboard shortcut
+    document.addEventListener('keydown', function (e) {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        open ? closeCmd() : openCmd();
+        return;
+      }
+      if (!open) return;
+      if (e.key === 'Escape') { closeCmd(); return; }
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        setActive(Math.min(active + 1, filtered.length - 1));
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        setActive(Math.max(active - 1, 0));
+      } else if (e.key === 'Enter') {
+        if (active >= 0 && filtered[active]) navigate(filtered[active].href);
+      }
+    });
+
+    // Filter on input
+    if (input) {
+      input.addEventListener('input', function () {
+        var q = input.value.toLowerCase();
+        filtered = items.filter(function (it) { return it.label.toLowerCase().includes(q); });
+        active = -1;
+        renderList(filtered);
+      });
+    }
+
+    // Click outside to close
+    if (overlay) {
+      overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) closeCmd();
+      });
+    }
+  })();
+</script>

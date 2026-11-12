@@ -1,0 +1,442 @@
+---
+interface Props {
+  projectId: string;
+  projectName: string;
+}
+
+const { projectId, projectName } = Astro.props;
+---
+
+<figure class="diagram-container my-6 w-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--bg-surface)] p-4 sm:p-6 shadow-sm">
+  <div class="mb-3 flex items-center justify-between border-b border-[var(--border-subtle)] pb-2.5">
+    <div class="flex items-center gap-2">
+      <span class="inline-block h-2 w-2 rounded-full bg-[var(--accent)]"></span>
+      <figcaption class="font-mono text-xs uppercase tracking-wider text-[var(--text-tertiary)]">
+        System Architecture &middot; {projectName}
+      </figcaption>
+    </div>
+    <span class="font-mono text-[10px] text-[var(--text-tertiary)]">Interactive Schematic</span>
+  </div>
+
+  {projectId === 'agentforge' && (
+    <svg viewBox="0 0 760 260" class="w-full h-auto text-[var(--text-primary)]" role="img" aria-label="AgentForge Architecture Diagram: Prompt input to local LLM, schema validation, LangGraph plan-act-observe-reflect loop, MCP tool servers, and isolated project containers.">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="var(--accent)" />
+        </marker>
+        <marker id="arrow-subtle" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M 0 2 L 6 5 L 0 8 z" fill="var(--text-tertiary)" />
+        </marker>
+      </defs>
+
+      <!-- Input box -->
+      <g>
+        <rect x="20" y="40" width="130" height="70" rx="8" fill="var(--bg-elevated)" stroke="var(--border)" stroke-width="1.5" />
+        <text x="85" y="68" text-anchor="middle" font-family="var(--font-mono)" font-size="11" font-weight="600" fill="var(--text-primary)">Prompt Input</text>
+        <text x="85" y="88" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--text-secondary)">Plain-English Spec</text>
+      </g>
+
+      <!-- Arrow 1 -->
+      <path d="M 150 75 L 188 75" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#arrow)" />
+
+      <!-- Meta-Agent Pipeline -->
+      <g>
+        <rect x="194" y="25" width="160" height="100" rx="8" fill="var(--bg-elevated)" stroke="var(--accent)" stroke-width="1.5" />
+        <rect x="204" y="35" width="60" height="18" rx="4" fill="color-mix(in srgb, var(--accent) 12%, transparent)" />
+        <text x="234" y="47" text-anchor="middle" font-family="var(--font-mono)" font-size="9" font-weight="600" fill="var(--accent)">LLM CORE</text>
+        <text x="274" y="70" text-anchor="middle" font-family="var(--font-mono)" font-size="11" font-weight="600" fill="var(--text-primary)">Ollama / Spec Gen</text>
+        <text x="274" y="90" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--text-secondary)">Schema Validation</text>
+        <text x="274" y="106" text-anchor="middle" font-family="var(--font-sans)" font-size="9.5" fill="var(--accent-warm)">Semantic Checker</text>
+      </g>
+
+      <!-- Arrow 2 -->
+      <path d="M 354 75 L 392 75" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#arrow)" />
+
+      <!-- LangGraph Loop -->
+      <g>
+        <rect x="398" y="20" width="166" height="110" rx="8" fill="var(--bg-elevated)" stroke="var(--border)" stroke-width="1.5" />
+        <text x="481" y="44" text-anchor="middle" font-family="var(--font-mono)" font-size="11" font-weight="600" fill="var(--text-primary)">LangGraph Loop</text>
+        <!-- Loop items -->
+        <rect x="410" y="55" width="65" height="26" rx="4" fill="var(--bg-surface)" stroke="var(--border)" />
+        <text x="442" y="72" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" fill="var(--text-secondary)">Plan &rarr; Act</text>
+        <rect x="485" y="55" width="68" height="26" rx="4" fill="var(--bg-surface)" stroke="var(--border)" />
+        <text x="519" y="72" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" fill="var(--text-secondary)">Obs &rarr; Refl</text>
+
+        <!-- Circular flow hint -->
+        <path d="M 442 85 C 442 105, 519 105, 519 85" fill="none" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="3 3" />
+        <text x="481" y="118" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--accent)">Adaptive Cycle</text>
+      </g>
+
+      <!-- Arrow 3 -->
+      <path d="M 564 75 L 602 75" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#arrow)" />
+
+      <!-- MCP Tool Servers -->
+      <g>
+        <rect x="608" y="35" width="132" height="80" rx="8" fill="var(--bg-elevated)" stroke="var(--border)" stroke-width="1.5" />
+        <text x="674" y="62" text-anchor="middle" font-family="var(--font-mono)" font-size="11" font-weight="600" fill="var(--accent)">MCP Tools</text>
+        <text x="674" y="80" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--text-secondary)">Real Tool Calls</text>
+        <text x="674" y="98" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--text-tertiary)">HTTP / JSON-RPC</text>
+      </g>
+
+      <!-- Bottom container: Project Isolation -->
+      <g>
+        <rect x="20" y="165" width="720" height="75" rx="10" fill="color-mix(in srgb, var(--accent) 3%, var(--bg-elevated))" stroke="var(--border)" stroke-width="1" stroke-dasharray="4 4" />
+        <text x="40" y="186" font-family="var(--font-mono)" font-size="10" font-weight="600" fill="var(--accent)">PROJECT CONTAINER ISOLATION</text>
+
+        <!-- Sub components -->
+        <rect x="40" y="195" width="150" height="34" rx="6" fill="var(--bg-surface)" stroke="var(--border)" />
+        <text x="115" y="216" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--text-secondary)">FastAPI Control Plane</text>
+
+        <rect x="210" y="195" width="150" height="34" rx="6" fill="var(--bg-surface)" stroke="var(--border)" />
+        <text x="285" y="216" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--text-secondary)">Next.js Frontend</text>
+
+        <rect x="380" y="195" width="160" height="34" rx="6" fill="var(--bg-surface)" stroke="var(--border)" />
+        <text x="460" y="216" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--text-secondary)">Chroma Vector Memory</text>
+
+        <rect x="560" y="195" width="160" height="34" rx="6" fill="var(--bg-surface)" stroke="var(--border)" />
+        <text x="640" y="216" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--text-secondary)">Postgres &middot; Persistent Logs</text>
+      </g>
+
+      <!-- Connection line down -->
+      <path d="M 481 130 L 481 165" fill="none" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="3 3" marker-end="url(#arrow)" />
+    </svg>
+  )}
+
+  {projectId === 'velocitylb' && (
+    <svg viewBox="0 0 760 270" class="w-full h-auto text-[var(--text-primary)]" role="img" aria-label="VelocityLB Architecture Diagram: Client ingress, AIMD concurrency limiter, four routing strategies, active/passive health checking, and backend worker pool.">
+      <defs>
+        <marker id="v-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="var(--accent)" />
+        </marker>
+        <marker id="green-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#22c55e" />
+        </marker>
+      </defs>
+
+      <!-- Client -->
+      <g>
+        <circle cx="65" cy="120" r="32" fill="var(--bg-elevated)" stroke="var(--border)" stroke-width="1.5" />
+        <text x="65" y="117" text-anchor="middle" font-family="var(--font-mono)" font-size="11" font-weight="600" fill="var(--text-primary)">Client</text>
+        <text x="65" y="133" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--text-tertiary)">HTTP/1.1</text>
+      </g>
+
+      <!-- Arrow to AIMD -->
+      <path d="M 97 120 L 142 120" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#v-arrow)" />
+
+      <!-- AIMD Limiter -->
+      <g>
+        <rect x="148" y="80" width="120" height="80" rx="8" fill="var(--bg-elevated)" stroke="var(--accent)" stroke-width="1.5" />
+        <text x="208" y="110" text-anchor="middle" font-family="var(--font-mono)" font-size="11" font-weight="600" fill="var(--text-primary)">AIMD Limiter</text>
+        <text x="208" y="130" text-anchor="middle" font-family="var(--font-sans)" font-size="9.5" fill="var(--text-secondary)">Concurrency Guard</text>
+        <text x="208" y="146" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--accent)">Overload Protection</text>
+      </g>
+
+      <!-- Arrow to Engine -->
+      <path d="M 268 120 L 308 120" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#v-arrow)" />
+
+      <!-- Routing Engine -->
+      <g>
+        <rect x="314" y="45" width="180" height="150" rx="8" fill="var(--bg-elevated)" stroke="var(--border)" stroke-width="1.5" />
+        <text x="404" y="70" text-anchor="middle" font-family="var(--font-mono)" font-size="11" font-weight="600" fill="var(--accent)">Routing Engine (Go)</text>
+
+        <!-- 4 Strategies -->
+        <rect x="326" y="82" width="156" height="22" rx="4" fill="var(--bg-surface)" stroke="var(--border)" />
+        <text x="404" y="97" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--text-secondary)">1. Round-Robin</text>
+
+        <rect x="326" y="108" width="156" height="22" rx="4" fill="var(--bg-surface)" stroke="var(--border)" />
+        <text x="404" y="123" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--text-secondary)">2. Least-Connections</text>
+
+        <rect x="326" y="134" width="156" height="22" rx="4" fill="var(--bg-surface)" stroke="var(--border)" />
+        <text x="404" y="149" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--text-secondary)">3. Power of Two Choices</text>
+
+        <rect x="326" y="160" width="156" height="24" rx="4" fill="color-mix(in srgb, var(--accent) 12%, transparent)" stroke="var(--accent)" />
+        <text x="404" y="176" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" font-weight="600" fill="var(--accent)">4. EWMA Latency-Aware</text>
+      </g>
+
+      <!-- Routing paths to backends -->
+      <path d="M 494 90 C 530 65, 545 50, 574 45" fill="none" stroke="#22c55e" stroke-width="1.5" marker-end="url(#green-arrow)" />
+      <path d="M 494 120 L 574 120" fill="none" stroke="var(--accent-warm)" stroke-width="1.5" stroke-dasharray="4 4" />
+      <path d="M 494 150 C 530 175, 545 190, 574 195" fill="none" stroke="#22c55e" stroke-width="1.5" marker-end="url(#green-arrow)" />
+
+      <!-- Backends -->
+      <!-- Node A -->
+      <g>
+        <rect x="580" y="25" width="160" height="42" rx="6" fill="var(--bg-elevated)" stroke="#22c55e" stroke-width="1.2" />
+        <circle cx="595" cy="46" r="4" fill="#22c55e" />
+        <text x="610" y="42" font-family="var(--font-mono)" font-size="10" font-weight="600" fill="var(--text-primary)">Node A &middot; Healthy</text>
+        <text x="610" y="57" font-family="var(--font-mono)" font-size="9" fill="var(--text-tertiary)">p99 41ms</text>
+      </g>
+
+      <!-- Node B (Degraded) -->
+      <g>
+        <rect x="580" y="100" width="160" height="42" rx="6" fill="var(--bg-elevated)" stroke="var(--border)" stroke-width="1.2" />
+        <circle cx="595" cy="121" r="4" fill="var(--accent-warm)" />
+        <text x="610" y="117" font-family="var(--font-mono)" font-size="10" font-weight="600" fill="var(--text-primary)">Node B &middot; Degraded</text>
+        <text x="610" y="132" font-family="var(--font-mono)" font-size="9" fill="var(--accent-warm)">p99 503ms (Avoided)</text>
+      </g>
+
+      <!-- Node C -->
+      <g>
+        <rect x="580" y="175" width="160" height="42" rx="6" fill="var(--bg-elevated)" stroke="#22c55e" stroke-width="1.2" />
+        <circle cx="595" cy="196" r="4" fill="#22c55e" />
+        <text x="610" y="192" font-family="var(--font-mono)" font-size="10" font-weight="600" fill="var(--text-primary)">Node C &middot; Healthy</text>
+        <text x="610" y="207" font-family="var(--font-mono)" font-size="9" fill="var(--text-tertiary)">p99 38ms</text>
+      </g>
+
+      <!-- Active Health Check loop & metrics -->
+      <g>
+        <rect x="148" y="225" width="460" height="32" rx="6" fill="var(--bg-surface)" stroke="var(--border)" />
+        <text x="378" y="245" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" fill="var(--text-secondary)">
+          Active/Passive Health Checker &middot; Prometheus Metrics &middot; Grafana Benchmark Harness
+        </text>
+      </g>
+    </svg>
+  )}
+
+  {projectId === 'autonomous-sre-engine' && (
+    <svg viewBox="0 0 760 260" class="w-full h-auto text-[var(--text-primary)]" role="img" aria-label="Autonomous SRE Engine Architecture Diagram: K8s cluster watch, incident detection, RAG diagnosis with Qdrant and Ollama, remediation generation, and verification.">
+      <defs>
+        <marker id="sre-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="var(--accent)" />
+        </marker>
+      </defs>
+
+      <!-- K8s cluster -->
+      <g>
+        <rect x="20" y="55" width="140" height="110" rx="8" fill="var(--bg-elevated)" stroke="var(--border)" stroke-width="1.5" />
+        <text x="90" y="85" text-anchor="middle" font-family="var(--font-mono)" font-size="11" font-weight="600" fill="var(--text-primary)">Kubernetes</text>
+        <text x="90" y="103" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--text-secondary)">Cluster State</text>
+        <text x="90" y="125" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--text-tertiary)">Pods &middot; Logs &middot; Events</text>
+        <rect x="35" y="137" width="110" height="18" rx="3" fill="var(--bg-surface)" stroke="var(--border)" />
+        <text x="90" y="149" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--accent-warm)">Incident Emitted</text>
+      </g>
+
+      <path d="M 160 100 L 195 100" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#sre-arrow)" />
+
+      <!-- Agent 1: Watch & Detect -->
+      <g>
+        <rect x="200" y="60" width="125" height="85" rx="8" fill="var(--bg-elevated)" stroke="var(--border)" stroke-width="1.5" />
+        <text x="262" y="88" text-anchor="middle" font-family="var(--font-mono)" font-size="10" font-weight="600" fill="var(--accent)">1. Watcher Agent</text>
+        <text x="262" y="108" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--text-secondary)">Anomaly Filter</text>
+        <text x="262" y="126" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--text-tertiary)">Real-time Polling</text>
+      </g>
+
+      <path d="M 325 100 L 360 100" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#sre-arrow)" />
+
+      <!-- Agent 2: RAG Diagnosis -->
+      <g>
+        <rect x="365" y="45" width="170" height="120" rx="8" fill="var(--bg-elevated)" stroke="var(--accent)" stroke-width="1.5" />
+        <text x="450" y="72" text-anchor="middle" font-family="var(--font-mono)" font-size="11" font-weight="600" fill="var(--accent)">2. Diagnosis Agent</text>
+        <text x="450" y="90" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--text-secondary)">RAG Reasoning</text>
+
+        <!-- Qdrant & Ollama boxes -->
+        <rect x="377" y="102" width="68" height="26" rx="4" fill="var(--bg-surface)" stroke="var(--border)" />
+        <text x="411" y="119" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--text-primary)">Qdrant KB</text>
+        <rect x="452" y="102" width="72" height="26" rx="4" fill="var(--bg-surface)" stroke="var(--border)" />
+        <text x="488" y="119" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--text-primary)">Ollama LLM</text>
+
+        <text x="450" y="148" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--accent-warm)">Curated Failure Modes</text>
+      </g>
+
+      <path d="M 535 100 L 570 100" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#sre-arrow)" />
+
+      <!-- Agent 3: Remediation & Verify -->
+      <g>
+        <rect x="575" y="45" width="165" height="120" rx="8" fill="var(--bg-elevated)" stroke="var(--border)" stroke-width="1.5" />
+        <text x="657" y="72" text-anchor="middle" font-family="var(--font-mono)" font-size="10.5" font-weight="600" fill="var(--accent)">3. Remediation Agent</text>
+        <text x="657" y="90" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--text-secondary)">Generate kubectl Fix</text>
+        <rect x="587" y="102" width="141" height="24" rx="4" fill="var(--bg-surface)" stroke="var(--border)" />
+        <text x="657" y="118" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--text-primary)">Safety &amp; Verification</text>
+        <text x="657" y="146" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="#22c55e">Autonomous Rollback Guard</text>
+      </g>
+
+      <!-- Feedback loop to K8s -->
+      <path d="M 657 165 C 657 220, 90 220, 90 165" fill="none" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="4 4" marker-end="url(#sre-arrow)" />
+      <text x="375" y="212" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" fill="var(--text-tertiary)">Apply Remediation &amp; Verify Cluster Health</text>
+    </svg>
+  )}
+
+  {projectId === 'greenml' && (
+    <svg viewBox="0 0 760 250" class="w-full h-auto text-[var(--text-primary)]" role="img" aria-label="GreenML Architecture: AutoML candidate generation, real-time CPU/GPU energy sensors, and multi-objective Pareto optimization for edge deployment.">
+      <defs>
+        <marker id="g-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="var(--accent)" />
+        </marker>
+      </defs>
+
+      <!-- Task / Data -->
+      <g>
+        <rect x="25" y="70" width="125" height="75" rx="8" fill="var(--bg-elevated)" stroke="var(--border)" stroke-width="1.5" />
+        <text x="87" y="98" text-anchor="middle" font-family="var(--font-mono)" font-size="11" font-weight="600" fill="var(--text-primary)">Dataset &middot; Task</text>
+        <text x="87" y="118" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--text-secondary)">Tabular / ML Spec</text>
+      </g>
+
+      <path d="M 150 105 L 188 105" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#g-arrow)" />
+
+      <!-- AutoML Candidates -->
+      <g>
+        <rect x="194" y="55" width="165" height="105" rx="8" fill="var(--bg-elevated)" stroke="var(--border)" stroke-width="1.5" />
+        <text x="276" y="80" text-anchor="middle" font-family="var(--font-mono)" font-size="11" font-weight="600" fill="var(--accent)">AutoML Exploration</text>
+        <rect x="206" y="92" width="141" height="24" rx="4" fill="var(--bg-surface)" stroke="var(--border)" />
+        <text x="276" y="108" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--text-primary)">AutoGluon + Scikit-Learn</text>
+        <text x="276" y="138" text-anchor="middle" font-family="var(--font-sans)" font-size="9.5" fill="var(--text-secondary)">Architecture Selection</text>
+      </g>
+
+      <path d="M 359 105 L 398 105" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#g-arrow)" />
+
+      <!-- Energy Sensing & Profiling -->
+      <g>
+        <rect x="404" y="30" width="170" height="155" rx="8" fill="var(--bg-elevated)" stroke="var(--accent)" stroke-width="1.5" />
+        <text x="489" y="56" text-anchor="middle" font-family="var(--font-mono)" font-size="11" font-weight="600" fill="var(--accent)">Energy Profiler</text>
+
+        <!-- CPU/GPU Watts meter -->
+        <rect x="416" y="68" width="146" height="40" rx="5" fill="var(--bg-surface)" stroke="var(--border)" />
+        <text x="489" y="86" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" font-weight="600" fill="var(--accent-warm)">Hardware Sensors</text>
+        <text x="489" y="100" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--text-tertiary)">Real-time CPU / GPU Watts</text>
+
+        <rect x="416" y="118" width="146" height="48" rx="5" fill="var(--bg-surface)" stroke="var(--border)" />
+        <text x="489" y="136" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" font-weight="600" fill="var(--text-primary)">Pareto Optimizer</text>
+        <text x="489" y="152" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--accent)">F1-Score vs Measured Power</text>
+      </g>
+
+      <path d="M 574 105 L 612 105" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#g-arrow)" />
+
+      <!-- Deployable Model Output -->
+      <g>
+        <rect x="618" y="65" width="125" height="85" rx="8" fill="var(--bg-elevated)" stroke="#22c55e" stroke-width="1.5" />
+        <text x="680" y="93" text-anchor="middle" font-family="var(--font-mono)" font-size="10.5" font-weight="600" fill="var(--text-primary)">Winning Model</text>
+        <text x="680" y="112" text-anchor="middle" font-family="var(--font-sans)" font-size="9.5" fill="#22c55e">Pruned &middot; Low Power</text>
+        <text x="680" y="130" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--text-tertiary)">Edge / IoT Ready</text>
+      </g>
+
+      <text x="380" y="222" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" fill="var(--text-secondary)">
+        Continuous feedback loop balancing model accuracy against joules per inference
+      </text>
+    </svg>
+  )}
+
+  {projectId === 'ops-center' && (
+    <svg viewBox="0 0 760 250" class="w-full h-auto text-[var(--text-primary)]" role="img" aria-label="Ops-Center Architecture: React Vite clients, WebSocket layer, Node/Express instances, Redis pub/sub backplane, and MongoDB database.">
+      <defs>
+        <marker id="ops-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="var(--accent)" />
+        </marker>
+      </defs>
+
+      <!-- Frontend clients -->
+      <g>
+        <rect x="25" y="30" width="145" height="150" rx="8" fill="var(--bg-elevated)" stroke="var(--border)" stroke-width="1.5" />
+        <text x="97" y="55" text-anchor="middle" font-family="var(--font-mono)" font-size="11" font-weight="600" fill="var(--text-primary)">React + Vite Clients</text>
+        <rect x="37" y="68" width="121" height="26" rx="4" fill="var(--bg-surface)" stroke="var(--border)" />
+        <text x="97" y="85" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--text-secondary)">Incident War Room</text>
+        <rect x="37" y="102" width="121" height="26" rx="4" fill="var(--bg-surface)" stroke="var(--border)" />
+        <text x="97" y="119" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--text-secondary)">Live Task Kanban</text>
+        <rect x="37" y="136" width="121" height="26" rx="4" fill="var(--bg-surface)" stroke="var(--border)" />
+        <text x="97" y="153" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--accent)">Role-Based Auth (JWT)</text>
+      </g>
+
+      <path d="M 170 105 L 210 105" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#ops-arrow)" />
+      <path d="M 210 105 L 170 105" fill="none" stroke="var(--accent)" stroke-width="1.5" />
+
+      <!-- Real-Time WebSocket Transport -->
+      <g>
+        <rect x="216" y="55" width="130" height="100" rx="8" fill="var(--bg-elevated)" stroke="var(--accent)" stroke-width="1.5" />
+        <text x="281" y="85" text-anchor="middle" font-family="var(--font-mono)" font-size="11" font-weight="600" fill="var(--accent)">Socket.io</text>
+        <text x="281" y="105" text-anchor="middle" font-family="var(--font-sans)" font-size="9.5" fill="var(--text-secondary)">Bi-directional</text>
+        <text x="281" y="125" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--text-tertiary)">Sub-50ms Events</text>
+      </g>
+
+      <path d="M 346 105 L 388 105" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#ops-arrow)" />
+
+      <!-- Express Servers -->
+      <g>
+        <rect x="394" y="45" width="150" height="120" rx="8" fill="var(--bg-elevated)" stroke="var(--border)" stroke-width="1.5" />
+        <text x="469" y="72" text-anchor="middle" font-family="var(--font-mono)" font-size="11" font-weight="600" fill="var(--text-primary)">Node &middot; Express API</text>
+        <rect x="406" y="85" width="126" height="24" rx="4" fill="var(--bg-surface)" stroke="var(--border)" />
+        <text x="469" y="101" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--text-secondary)">Instance A</text>
+        <rect x="406" y="115" width="126" height="24" rx="4" fill="var(--bg-surface)" stroke="var(--border)" />
+        <text x="469" y="131" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--text-secondary)">Instance B (Scaled)</text>
+      </g>
+
+      <path d="M 544 105 L 588 105" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#ops-arrow)" />
+
+      <!-- Redis & Mongo Data Layer -->
+      <g>
+        <rect x="594" y="35" width="145" height="140" rx="8" fill="var(--bg-elevated)" stroke="var(--border)" stroke-width="1.5" />
+        <rect x="606" y="48" width="121" height="48" rx="5" fill="var(--bg-surface)" stroke="var(--accent)" />
+        <text x="666" y="68" text-anchor="middle" font-family="var(--font-mono)" font-size="10" font-weight="600" fill="var(--accent)">Redis Pub/Sub</text>
+        <text x="666" y="84" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--text-secondary)">Horizontal Broadcast</text>
+
+        <rect x="606" y="106" width="121" height="52" rx="5" fill="var(--bg-surface)" stroke="var(--border)" />
+        <text x="666" y="126" text-anchor="middle" font-family="var(--font-mono)" font-size="10" font-weight="600" fill="var(--text-primary)">MongoDB</text>
+        <text x="666" y="142" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--text-tertiary)">Rooms &middot; Audit Logs</text>
+      </g>
+
+      <text x="380" y="215" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" fill="var(--text-tertiary)">
+        Redis pub/sub backplane guarantees state synchronization across all horizontally deployed WebSocket nodes
+      </text>
+    </svg>
+  )}
+
+  {projectId === 'quota-policy-sandbox' && (
+    <svg viewBox="0 0 760 250" class="w-full h-auto text-[var(--text-primary)]" role="img" aria-label="Quota Policy Sandbox Architecture: Next.js policy config, FastAPI backend, PettingZoo multi-agent environment, PPO RL tenants, and policy fairness verdict engine.">
+      <defs>
+        <marker id="q-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="var(--accent)" />
+        </marker>
+      </defs>
+
+      <!-- Policy Config -->
+      <g>
+        <rect x="25" y="50" width="140" height="110" rx="8" fill="var(--bg-elevated)" stroke="var(--border)" stroke-width="1.5" />
+        <text x="95" y="78" text-anchor="middle" font-family="var(--font-mono)" font-size="11" font-weight="600" fill="var(--text-primary)">Next.js Config UI</text>
+        <rect x="37" y="90" width="116" height="26" rx="4" fill="var(--bg-surface)" stroke="var(--border)" />
+        <text x="95" y="107" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--text-secondary)">Rate Limits &middot; Quotas</text>
+        <text x="95" y="138" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--text-tertiary)">Overuse Penalties</text>
+      </g>
+
+      <path d="M 165 105 L 202 105" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#q-arrow)" />
+
+      <!-- FastAPI Engine -->
+      <g>
+        <rect x="208" y="65" width="125" height="80" rx="8" fill="var(--bg-elevated)" stroke="var(--border)" stroke-width="1.5" />
+        <text x="270" y="95" text-anchor="middle" font-family="var(--font-mono)" font-size="11" font-weight="600" fill="var(--accent)">FastAPI Engine</text>
+        <text x="270" y="115" text-anchor="middle" font-family="var(--font-sans)" font-size="9.5" fill="var(--text-secondary)">Experiment Runner</text>
+        <text x="270" y="131" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--text-tertiary)">Multi-seed Testing</text>
+      </g>
+
+      <path d="M 333 105 L 370 105" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#q-arrow)" />
+
+      <!-- Multi-Agent Environment -->
+      <g>
+        <rect x="376" y="30" width="180" height="150" rx="8" fill="var(--bg-elevated)" stroke="var(--accent)" stroke-width="1.5" />
+        <text x="466" y="55" text-anchor="middle" font-family="var(--font-mono)" font-size="11" font-weight="600" fill="var(--text-primary)">PettingZoo Environment</text>
+
+        <rect x="388" y="68" width="156" height="32" rx="4" fill="var(--bg-surface)" stroke="var(--border)" />
+        <text x="466" y="85" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--accent)">Depleting Resource Pool</text>
+        <text x="466" y="95" text-anchor="middle" font-family="var(--font-mono)" font-size="7.5" fill="var(--text-tertiary)">Regenerates over time</text>
+
+        <!-- RL Agents -->
+        <rect x="388" y="108" width="156" height="42" rx="4" fill="var(--bg-surface)" stroke="var(--accent)" />
+        <text x="466" y="126" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" font-weight="600" fill="var(--accent)">PPO / Stable-Baselines3</text>
+        <text x="466" y="142" text-anchor="middle" font-family="var(--font-sans)" font-size="8.5" fill="var(--text-secondary)">Learns to exploit or cooperate</text>
+      </g>
+
+      <path d="M 556 105 L 594 105" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#q-arrow)" />
+
+      <!-- Verdict Engine -->
+      <g>
+        <rect x="600" y="50" width="140" height="110" rx="8" fill="var(--bg-elevated)" stroke="#22c55e" stroke-width="1.5" />
+        <text x="670" y="78" text-anchor="middle" font-family="var(--font-mono)" font-size="11" font-weight="600" fill="var(--text-primary)">Verdict Engine</text>
+        <text x="670" y="98" text-anchor="middle" font-family="var(--font-sans)" font-size="9.5" fill="#22c55e">Fairness Assessment</text>
+        <rect x="612" y="112" width="116" height="32" rx="4" fill="var(--bg-surface)" stroke="var(--border)" />
+        <text x="670" y="128" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--text-secondary)">Starvation vs</text>
+        <text x="670" y="138" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--text-secondary)">Dominance Metrics</text>
+      </g>
+
+      <text x="380" y="215" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" fill="var(--text-tertiary)">
+        Simulates adversarial policy gaming before shipping API rate limits or quota boundaries
+      </text>
+    </svg>
+  )}
+</figure>

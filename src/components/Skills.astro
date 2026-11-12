@@ -4,19 +4,45 @@ import { getCollection } from 'astro:content';
 const groups = (await getCollection('skillGroups')).sort((a, b) => a.data.order - b.data.order);
 ---
 
-<section id="skills" class="border-t border-ink/10">
-  <div class="mx-auto max-w-5xl px-6 py-16 md:py-20">
-    <h2 class="mb-8 text-2xl font-semibold tracking-tight md:text-3xl">Skills</h2>
+<section id="skills" style="
+  padding: 7rem 0;
+  border-top: 1px solid var(--border);
+">
+  <div class="section-container">
+    <div class="reveal" style="margin-bottom: 4rem;">
+      <span class="eyebrow">05 — Skills</span>
+      <h2 style="
+        font-family: var(--font-serif);
+        font-size: clamp(2.25rem, 4vw, 3.5rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        margin-top: 0.75rem;
+      ">
+        Tools & technologies.
+      </h2>
+    </div>
 
-    <div class="grid gap-x-10 gap-y-8 sm:grid-cols-2">
+    <div
+      class="reveal stagger-children"
+      style="
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 2.5rem;
+      "
+    >
       {groups.map((group) => (
         <div>
-          <h3 class="mb-3 font-mono text-xs text-ink/65">{group.data.label}</h3>
-          <div class="flex flex-wrap gap-1.5">
+          <h3 style="
+            font-family: var(--font-mono);
+            font-size: 0.6875rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+            margin-bottom: 0.875rem;
+          ">{group.data.label}</h3>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.4375rem;">
             {group.data.items.map((item) => (
-              <span class="border border-ink/15 px-2 py-1 font-mono text-xs text-ink/75">
-                {item}
-              </span>
+              <span class="chip">{item}</span>
             ))}
           </div>
         </div>

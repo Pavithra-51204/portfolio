@@ -2,20 +2,205 @@
 import { site } from '../data/site';
 ---
 
-<section id="contact" class="border-t border-ink/10 bg-panel-dark text-paper">
-  <div class="mx-auto flex max-w-xl flex-col items-center gap-6 px-6 py-24 text-center md:py-32">
-    <h2 class="text-2xl font-semibold tracking-tight md:text-3xl">Contact</h2>
-    <p class="max-w-prose text-sm leading-relaxed text-paper/75">
-      The fastest way to reach me is email &mdash; I read every message.
-    </p>
-    <a href={`mailto:${site.email}`} class="font-mono text-lg text-paper hover:text-signal md:text-xl">
-      {site.email}
-    </a>
-    <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-mono text-sm">
-      <a href={site.links.linkedin} class="text-paper/70 hover:text-signal">LinkedIn</a>
-      <a href={site.links.github} class="text-paper/70 hover:text-signal">GitHub</a>
-      <a href={site.links.medium} class="text-paper/70 hover:text-signal">Medium</a>
-      <a href={site.resumeUrl} class="text-paper/70 hover:text-signal">resume.pdf</a>
+<section id="contact" style="
+  padding: 7rem 0;
+  border-top: 1px solid var(--border);
+">
+  <div class="section-container">
+    <div class="reveal" style="max-width: 700px;">
+      <span class="eyebrow">06 — Contact</span>
+      <h2 style="
+        font-family: var(--font-serif);
+        font-size: clamp(2.5rem, 5vw, 4.5rem);
+        line-height: 1.05;
+        letter-spacing: -0.025em;
+        margin-top: 0.75rem;
+        margin-bottom: 1.5rem;
+        color: var(--text-primary);
+      ">
+        Let's build something<br/>
+        <span class="text-gradient" style="font-style:italic;">that scales.</span>
+      </h2>
+
+      <p style="
+        font-size: 1.0625rem;
+        color: var(--text-secondary);
+        line-height: 1.65;
+        max-width: 48ch;
+        margin-bottom: 2.5rem;
+      ">
+        Whether you're a professor, admissions committee member, or recruiter — I'd love to connect. The fastest path to me is email.
+      </p>
+
+      <!-- Email with copy button -->
+      <div style="
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        margin-bottom: 2.5rem;
+      ">
+        <a
+          href={`mailto:${site.email}`}
+          style="
+            font-family: var(--font-mono);
+            font-size: clamp(0.8125rem, 2.5vw, 1.125rem);
+            color: var(--text-primary);
+            text-decoration: underline;
+            text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
+            text-underline-offset: 4px;
+            transition: text-decoration-color 0.2s;
+            word-break: break-word;
+          "
+          onmouseover="this.style.textDecorationColor='var(--accent)'"
+          onmouseout="this.style.textDecorationColor='color-mix(in srgb, var(--accent) 40%, transparent)'"
+        >
+          {site.email}
+        </a>
+        <button
+          id="copy-email-btn"
+          aria-label="Copy email address"
+          title="Copy to clipboard"
+          data-email={site.email}
+          style="
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.35rem 0.75rem;
+            font-family: var(--font-mono);
+            font-size: 0.6875rem;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: transparent;
+            cursor: pointer;
+            transition: color 0.2s, border-color 0.2s;
+          "
+        >
+          <svg id="copy-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <svg id="check-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><polyline points="20 6 9 17 4 12"/></svg>
+          <span id="copy-label">Copy</span>
+        </button>
+      </div>
+
+      <!-- Social links -->
+      <div style="
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        align-items: center;
+      ">
+        {[
+          { href: site.links.linkedin, label: 'LinkedIn' },
+          { href: site.links.github, label: 'GitHub' },
+          { href: site.links.medium, label: 'Medium' },
+          { href: site.resumeUrl, label: 'Resume PDF' },
+        ].map((link) => (
+          <a
+            href={link.href}
+            target={link.href.startsWith('http') ? '_blank' : undefined}
+            rel={link.href.startsWith('http') ? 'noopener' : undefined}
+            class="social-link"
+            style="
+              display: inline-flex;
+              align-items: center;
+              gap: 0.3rem;
+              font-family: var(--font-mono);
+              font-size: 0.75rem;
+              color: var(--text-secondary);
+              padding: 0.5rem 1rem;
+              border: 1px solid var(--border);
+              border-radius: 100px;
+              transition: color 0.2s, border-color 0.2s, background 0.2s;
+            "
+          >
+            {link.label}
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        ))}
+      </div>
     </div>
   </div>
+
+  <!-- Toast -->
+  <div
+    id="copy-toast"
+    role="status"
+    aria-live="polite"
+    style="
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      padding: 0.75rem 1.25rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      box-shadow: var(--shadow-md);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+      z-index: 9000;
+    "
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+    Email copied to clipboard
+  </div>
 </section>
+
+<style>
+  .social-link:hover {
+    color: var(--accent) !important;
+    border-color: var(--accent) !important;
+    background: color-mix(in srgb, var(--accent) 6%, transparent) !important;
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var btn = document.getElementById('copy-email-btn');
+    var copyIcon = document.getElementById('copy-icon');
+    var checkIcon = document.getElementById('check-icon');
+    var label = document.getElementById('copy-label');
+    var toast = document.getElementById('copy-toast');
+
+    if (!btn) return;
+
+    btn.addEventListener('click', function () {
+      var email = btn.dataset.email || '';
+      navigator.clipboard.writeText(email).then(function () {
+        // Update button
+        if (copyIcon) copyIcon.style.display = 'none';
+        if (checkIcon) checkIcon.style.display = 'block';
+        if (label) label.textContent = 'Copied!';
+        btn.style.color = 'var(--accent)';
+        btn.style.borderColor = 'var(--accent)';
+
+        // Show toast
+        if (toast) {
+          toast.style.opacity = '1';
+          toast.style.transform = 'translateY(0)';
+        }
+
+        // Reset after 2.5s
+        setTimeout(function () {
+          if (copyIcon) copyIcon.style.display = 'block';
+          if (checkIcon) checkIcon.style.display = 'none';
+          if (label) label.textContent = 'Copy';
+          btn.style.color = '';
+          btn.style.borderColor = '';
+          if (toast) {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(8px)';
+          }
+        }, 2500);
+      });
+    });
+  })();
+</script>
