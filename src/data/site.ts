@@ -1,6 +1,6 @@
 export const site = {
   name: 'Pavithra Manogaran',
-  role: 'Systems & AI Engineer',
+  role: 'AI Engineer',
   email: 'pavithra.manogaran2004@gmail.com',
   location: 'Chennai, India',
   links: {

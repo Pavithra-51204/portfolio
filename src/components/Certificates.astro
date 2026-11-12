@@ -10,11 +10,11 @@ const cloudCerts = [
 ];
 
 const nptelCerts = [
-  { title: 'Cloud Computing', code: 'NPTEL Elite', issuer: 'NPTEL / IIT' },
-  { title: 'Data Science for Engineers', code: 'NPTEL Elite', issuer: 'NPTEL / IIT' },
-  { title: 'Python for Data Science', code: 'NPTEL Elite', issuer: 'NPTEL / IIT' },
-  { title: 'Database Management Systems', code: 'NPTEL Elite', issuer: 'NPTEL / IIT' },
-  { title: 'Programming in Java', code: 'NPTEL Elite', issuer: 'NPTEL / IIT' },
+  { title: 'Cloud Computing', issuer: 'NPTEL / IIT' },
+  { title: 'Data Science for Engineers', issuer: 'NPTEL / IIT' },
+  { title: 'Python for Data Science', issuer: 'NPTEL / IIT' },
+  { title: 'Database Management Systems', issuer: 'NPTEL / IIT' },
+  { title: 'Programming in Java', issuer: 'NPTEL / IIT' },
 ];
 
 const achievements = [
@@ -107,10 +107,7 @@ const achievements = [
                 {cert.title}
               </h4>
             </div>
-            <div style="margin-top: 0.75rem; padding-top: 0.5rem; border-top: 1px dashed var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 600; color: var(--accent-aqua);">
-                {cert.code}
-              </span>
+            <div style="margin-top: 0.75rem; padding-top: 0.5rem; border-top: 1px dashed var(--border-subtle); display: flex; justify-content: flex-end; align-items: center;">
               <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent-aqua)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
           </div>

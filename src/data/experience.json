@@ -6,7 +6,7 @@
     "location": "On-site",
     "start": "Feb 2026",
     "end": "Present",
-    "outcome": "Turned AI adoption into a measured ROI conversation with live customers, not a pilot deck.",
+    "outcome": "Turned AI adoption into a measured ROI conversation with live customers.",
     "bullets": [
       "Identified high-impact AI use cases across live customer SAP projects to demonstrate measurable business value for clients.",
       "Measured and reported time and cost savings from AI adoption, giving stakeholders concrete ROI insights instead of estimates.",
@@ -22,7 +22,7 @@
     "location": "Remote",
     "start": "May 2025",
     "end": "Aug 2025",
-    "outcome": "Shipped a cloud-based financial tracker with GenAI-driven spending insights, run with real SRE practices.",
+    "outcome": "Shipped a cloud-based financial tracker with GenAI-driven spending insights and SRE practices.",
     "bullets": [
       "Designed and built a cloud-based financial tracker on AWS for scalable, reliable expense management.",
       "Integrated GenAI capabilities to analyze user spending patterns and generate financial insights.",

@@ -24,29 +24,9 @@ import { site } from '../data/site';
     >
       <!-- Left Column: Bio & Action -->
       <div>
-        <!-- Eyebrow row with Availability Pill -->
+        <!-- Eyebrow row -->
         <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
           <span class="eyebrow">{site.role} · {site.location}</span>
-          <span
-            style="
-              display: inline-flex;
-              align-items: center;
-              gap: 0.5rem;
-              padding: 0.35rem 0.85rem;
-              border: 1px solid color-mix(in srgb, #10B981 40%, transparent);
-              border-radius: 100px;
-              font-family: var(--font-mono);
-              font-size: 0.6875rem;
-              font-weight: 500;
-              color: #10B981;
-              background: color-mix(in srgb, #10B981 10%, transparent);
-              max-width: 100%;
-              line-height: 1.35;
-            "
-          >
-            <span class="pulse-dot"></span>
-            <span>Applying for MS in AI / ML / Data Science, Fall 2027</span>
-          </span>
         </div>
 
         <!-- Heading: "Hi, I am {Pavithra Manogaran}" with curly braces matching reference -->
@@ -65,21 +45,7 @@ import { site } from '../data/site';
           <span class="text-gradient">&#123;Pavithra Manogaran&#125;</span>
         </h1>
 
-        <!-- Tagline -->
-        <p
-          style="
-            font-family: var(--font-heading);
-            font-size: clamp(1.125rem, 2vw, 1.375rem);
-            font-weight: 500;
-            color: var(--accent);
-            line-height: 1.4;
-            margin-bottom: 1.25rem;
-          "
-        >
-          I build agentic AI systems that run in production.
-        </p>
-
-        <!-- 2-sentence summary paragraph -->
+        <!-- Summary paragraph -->
         <p
           style="
             font-size: 1rem;
@@ -89,7 +55,7 @@ import { site } from '../data/site';
             margin-bottom: 2rem;
           "
         >
-          From multi-agent orchestration and RAG pipelines to SAP enterprise platforms and cloud/DevOps infrastructure — I build systems where the architecture matters. Pursuing a Master's focused on agentic AI, model evaluation, and scalable ML systems.
+          From multi-agent orchestration and RAG pipelines to SAP enterprise platforms and cloud/DevOps infrastructure — I build systems where the architecture matters.
         </p>
 
         <!-- Action CTAs -->
@@ -204,63 +170,6 @@ import { site } from '../data/site';
         </div>
       </div>
     </div>
-
-    <!-- Stat Strip below the Hero (full-width, 5 balanced cells) -->
-    <div
-      id="stat-strip"
-      class="app-card stat-strip-container"
-      style="
-        margin-top: 4rem;
-        display: grid;
-        overflow: hidden;
-      "
-    >
-      {[
-        { number: '2',     suffix: '', label: 'IEEE publications' },
-        { number: '2',     suffix: '', label: 'Patents filed' },
-        { number: '93.5',  suffix: '%', label: 'Flood-forecast accuracy' },
-        { number: '503 → 94', suffix: ' ms', label: 'p99 latency (VelocityLB)' },
-        { number: '6',     suffix: '', label: 'Flagship projects' },
-      ].map((stat) => (
-        <div
-          class="stat-cell"
-          data-target={stat.number}
-          data-suffix={stat.suffix}
-          style="
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-          "
-        >
-          <div
-            style="
-              font-family: var(--font-heading);
-              font-size: clamp(1.75rem, 3vw, 2.5rem);
-              font-weight: 700;
-              color: var(--text-primary);
-              line-height: 1.1;
-              letter-spacing: -0.02em;
-            "
-          >
-            <span class="stat-num">{stat.number}</span>
-            <span style="font-size: 0.7em; color: var(--accent);">{stat.suffix}</span>
-          </div>
-          <div
-            style="
-              font-family: var(--font-mono);
-              font-size: 0.6875rem;
-              color: var(--text-tertiary);
-              margin-top: 0.35rem;
-              text-transform: uppercase;
-              letter-spacing: 0.05em;
-            "
-          >
-            {stat.label}
-          </div>
-        </div>
-      ))}
-    </div>
   </div>
 </section>
 
@@ -268,44 +177,6 @@ import { site } from '../data/site';
   @media (min-width: 900px) {
     .hero-grid {
       grid-template-columns: 1.15fr 0.85fr !important;
-    }
-  }
-
-  .stat-strip-container {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-  }
-  .stat-cell:not(:last-child) {
-    border-right: 1px solid var(--border-subtle);
-  }
-
-  @media (max-width: 1024px) {
-    .stat-strip-container {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-    .stat-cell:nth-child(3) {
-      border-right: none;
-    }
-    .stat-cell:nth-child(1),
-    .stat-cell:nth-child(2),
-    .stat-cell:nth-child(3) {
-      border-bottom: 1px solid var(--border-subtle);
-    }
-  }
-
-  @media (max-width: 640px) {
-    .stat-strip-container {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .stat-cell {
-      border-right: none !important;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-    .stat-cell:nth-child(odd) {
-      border-right: 1px solid var(--border-subtle) !important;
-    }
-    .stat-cell:last-child {
-      grid-column: span 2;
-      border-bottom: none;
     }
   }
 
