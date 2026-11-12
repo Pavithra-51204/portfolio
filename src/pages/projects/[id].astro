@@ -74,11 +74,6 @@ const nextProject = currentIndex < allProjects.length - 1 ? allProjects[currentI
             </h2>
 
             <div>
-              <span class="block font-mono text-[10px] uppercase tracking-wider text-[var(--text-tertiary)]">Role & Scope</span>
-              <p class="mt-1 text-sm font-medium text-[var(--text-primary)]">Architecture & Engineering (Solo)</p>
-            </div>
-
-            <div>
               <span class="block font-mono text-[10px] uppercase tracking-wider text-[var(--text-tertiary)] mb-2">Technology Stack</span>
               <div class="flex flex-wrap gap-1.5">
                 {stack.map((tech) => (
@@ -148,10 +143,6 @@ const nextProject = currentIndex < allProjects.length - 1 ? allProjects[currentI
               <p>
                 {summary}
               </p>
-              <!-- Visible TODO comment for user customization -->
-              <p class="font-mono text-xs text-[var(--text-tertiary)] italic border-l-2 border-[var(--border)] pl-3">
-                &lt;!-- TODO: add detail on benchmark methodology or custom hyperparameter trade-offs --&gt;
-              </p>
             </div>
           </section>
 
@@ -183,46 +174,10 @@ const nextProject = currentIndex < allProjects.length - 1 ? allProjects[currentI
             </div>
           </section>
 
-          <!-- 4. Results & Highlights -->
-          <section id="results" class="flex flex-col gap-3">
-            <div class="flex items-center gap-3">
-              <span class="font-mono text-xs uppercase tracking-widest text-[var(--accent)] font-semibold">04 &middot; Verification</span>
-              <div class="h-px flex-1 bg-[var(--border-subtle)]"></div>
-            </div>
-            <h2 class="font-serif text-2xl sm:text-3xl font-medium text-[var(--text-primary)]">
-              Results &amp; Validations
-            </h2>
-
-            <!-- Clearly marked placeholder block for screenshots / benchmark charts -->
-            <div class="rounded-xl border-2 border-dashed border-[var(--border)] bg-[color-mix(in_srgb,var(--accent)_3%,var(--bg-surface))] p-8 text-center">
-              <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--accent)_12%,transparent)] text-[var(--accent)] mb-3">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-              </div>
-              <p class="font-mono text-sm font-medium text-[var(--text-primary)]">
-                [ Screenshots &middot; Benchmark Metrics &middot; Telemetry Dashboards ]
-              </p>
-              <p class="font-mono text-xs text-[var(--text-tertiary)] mt-1.5 max-w-md mx-auto">
-                &lt;!-- TODO: insert production screenshot, Grafana latency dashboard, or confusion matrix here --&gt;
-              </p>
-            </div>
-
-            <!-- Highlights list -->
-            <ul class="mt-4 space-y-3">
-              {detail.highlights.map((highlight) => (
-                <li class="flex items-start gap-3 rounded-lg border border-[var(--border)] bg-[var(--bg-surface)] p-4 text-sm sm:text-base leading-relaxed text-[var(--text-secondary)] shadow-sm">
-                  <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--accent)_12%,transparent)] text-[var(--accent)]">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                  </span>
-                  <span>{highlight}</span>
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          <!-- 5. What I Learned -->
+          <!-- 4. What I Learned -->
           <section id="learnings" class="flex flex-col gap-3">
             <div class="flex items-center gap-3">
-              <span class="font-mono text-xs uppercase tracking-widest text-[var(--accent)] font-semibold">05 &middot; Retrospective</span>
+              <span class="font-mono text-xs uppercase tracking-widest text-[var(--accent)] font-semibold">04 &middot; Retrospective</span>
               <div class="h-px flex-1 bg-[var(--border-subtle)]"></div>
             </div>
             <h2 class="font-serif text-2xl sm:text-3xl font-medium text-[var(--text-primary)]">
@@ -233,15 +188,12 @@ const nextProject = currentIndex < allProjects.length - 1 ? allProjects[currentI
               <p class="text-sm sm:text-base leading-relaxed text-[var(--text-secondary)]">
                 Building {name} reinforced the necessity of strict validation boundaries when deploying autonomous agents and distributed systems. Designing for failure upfront—whether handling hallucinated agent parameters or sudden upstream network degradation—is what transforms prototypes into robust production software.
               </p>
-              <div class="mt-4 rounded border border-dashed border-[var(--border)] bg-[var(--bg)] p-3 font-mono text-xs text-[var(--text-tertiary)]">
-                &lt;!-- TODO: add personal reflection on architectural trade-offs learned during {name} development --&gt;
-              </div>
             </div>
           </section>
         </>
       ) : (
         <div class="rounded-xl border border-[var(--border)] p-8 text-center font-mono text-sm text-[var(--text-tertiary)]">
-          &lt;!-- TODO: add detail content for {name} --&gt;
+          Case study details coming soon.
         </div>
       )}
     </article>
