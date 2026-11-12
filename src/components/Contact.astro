@@ -2,61 +2,77 @@
 import { site } from '../data/site';
 ---
 
-<section id="contact" style="
-  padding: 7rem 0;
-  border-top: 1px solid var(--border);
-">
+<section id="contact" class="site-section" style="padding-bottom: 2rem;">
   <div class="section-container">
-    <div class="reveal" style="max-width: 700px;">
-      <span class="eyebrow">06 — Contact</span>
-      <h2 style="
-        font-family: var(--font-serif);
-        font-size: clamp(2.5rem, 5vw, 4.5rem);
-        line-height: 1.05;
-        letter-spacing: -0.025em;
-        margin-top: 0.75rem;
-        margin-bottom: 1.5rem;
-        color: var(--text-primary);
-      ">
-        Let's build something<br/>
-        <span class="text-gradient" style="font-style:italic;">that scales.</span>
+    <div class="reveal" style="max-width: 760px; margin: 0 auto; text-align: center;">
+      <span class="eyebrow" style="justify-content: center;">08 — Contact</span>
+      <h2
+        style="
+          font-family: var(--font-heading);
+          font-size: clamp(2.25rem, 4.5vw, 3.75rem);
+          font-weight: 700;
+          line-height: 1.15;
+          letter-spacing: -0.03em;
+          margin-top: 0.75rem;
+          margin-bottom: 1.25rem;
+          color: var(--text-primary);
+        "
+      >
+        Let's start something <span class="text-gradient">great together.</span>
       </h2>
 
-      <p style="
-        font-size: 1.0625rem;
-        color: var(--text-secondary);
-        line-height: 1.65;
-        max-width: 48ch;
-        margin-bottom: 2.5rem;
-      ">
-        Whether you're a professor, admissions committee member, or recruiter — I'd love to connect. The fastest path to me is email.
+      <p
+        style="
+          font-size: 1.0625rem;
+          color: var(--text-secondary);
+          line-height: 1.65;
+          max-width: 50ch;
+          margin: 0 auto 2rem auto;
+        "
+      >
+        The fastest way to reach me is email, I read every message. Whether you're discussing graduate research opportunities, systems engineering, or prospective collaborations, feel free to drop a line.
       </p>
 
-      <!-- Email with copy button -->
-      <div style="
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        flex-wrap: wrap;
-        margin-bottom: 2.5rem;
-      ">
+      <!-- Primary CTA button like reference: "Get in touch" -->
+      <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem;">
         <a
-          href={`mailto:${site.email}`}
+          href={`mailto:${site.email}?subject=Hello%20Pavithra%20-%20Opportunity%20/%20Admissions`}
+          class="btn-primary"
           style="
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.85rem 1.85rem;
+            border-radius: 9999px;
             font-family: var(--font-mono);
-            font-size: clamp(0.8125rem, 2.5vw, 1.125rem);
-            color: var(--text-primary);
-            text-decoration: underline;
-            text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
-            text-underline-offset: 4px;
-            transition: text-decoration-color 0.2s;
-            word-break: break-word;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 4px 20px color-mix(in srgb, var(--accent) 35%, transparent);
           "
-          onmouseover="this.style.textDecorationColor='var(--accent)'"
-          onmouseout="this.style.textDecorationColor='color-mix(in srgb, var(--accent) 40%, transparent)'"
         >
-          {site.email}
+          <span>Get in touch</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
         </a>
+      </div>
+
+      <!-- Email with copy button -->
+      <div
+        style="
+          display: inline-flex;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 0.5rem 1rem;
+          background: var(--bg-surface);
+          border: 1px solid var(--border);
+          border-radius: 9999px;
+          margin-bottom: 2.5rem;
+          box-shadow: var(--shadow-sm);
+        "
+      >
+        <span style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--text-primary);">
+          {site.email}
+        </span>
         <button
           id="copy-email-btn"
           aria-label="Copy email address"
@@ -65,16 +81,16 @@ import { site } from '../data/site';
           style="
             display: flex;
             align-items: center;
-            gap: 0.3rem;
-            padding: 0.35rem 0.75rem;
+            gap: 0.35rem;
+            padding: 0.3rem 0.65rem;
             font-family: var(--font-mono);
             font-size: 0.6875rem;
-            color: var(--text-secondary);
-            border: 1px solid var(--border);
+            color: var(--accent);
+            border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
             border-radius: 6px;
-            background: transparent;
+            background: color-mix(in srgb, var(--accent) 8%, transparent);
             cursor: pointer;
-            transition: color 0.2s, border-color 0.2s;
+            transition: all 0.2s;
           "
         >
           <svg id="copy-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
@@ -84,12 +100,16 @@ import { site } from '../data/site';
       </div>
 
       <!-- Social links -->
-      <div style="
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem;
-        align-items: center;
-      ">
+      <div
+        style="
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.75rem;
+          justify-content: center;
+          align-items: center;
+          margin-bottom: 4rem;
+        "
+      >
         {[
           { href: site.links.linkedin, label: 'LinkedIn' },
           { href: site.links.github, label: 'GitHub' },
@@ -99,19 +119,21 @@ import { site } from '../data/site';
           <a
             href={link.href}
             target={link.href.startsWith('http') ? '_blank' : undefined}
-            rel={link.href.startsWith('http') ? 'noopener' : undefined}
+            rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
             class="social-link"
             style="
               display: inline-flex;
               align-items: center;
-              gap: 0.3rem;
+              gap: 0.35rem;
               font-family: var(--font-mono);
               font-size: 0.75rem;
               color: var(--text-secondary);
-              padding: 0.5rem 1rem;
+              padding: 0.5rem 1.1rem;
               border: 1px solid var(--border);
               border-radius: 100px;
-              transition: color 0.2s, border-color 0.2s, background 0.2s;
+              background: var(--bg-surface);
+              transition: all 0.2s;
+              text-decoration: none;
             "
           >
             {link.label}
@@ -119,6 +141,61 @@ import { site } from '../data/site';
           </a>
         ))}
       </div>
+    </div>
+
+    <!-- Glowing Wave Circuit Line SVG at Bottom (matches reference design) -->
+    <div style="width: 100%; max-width: 860px; margin: 0 auto; overflow: hidden; opacity: 0.85;">
+      <svg
+        viewBox="0 0 860 120"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        style="width: 100%; height: auto; display: block;"
+      >
+        <defs>
+          <linearGradient id="waveGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.1" />
+            <stop offset="50%" stop-color="var(--accent-aqua)" stop-opacity="0.8" />
+            <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.2" />
+          </linearGradient>
+          <linearGradient id="waveGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.05" />
+            <stop offset="55%" stop-color="var(--accent)" stop-opacity="0.9" />
+            <stop offset="100%" stop-color="var(--accent-aqua)" stop-opacity="0.1" />
+          </linearGradient>
+          <linearGradient id="waveGrad3" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="var(--accent)" stop-opacity="0" />
+            <stop offset="50%" stop-color="#C084FC" stop-opacity="0.7" />
+            <stop offset="100%" stop-color="var(--accent)" stop-opacity="0" />
+          </linearGradient>
+        </defs>
+
+        <!-- Base subtle horizontal line -->
+        <line x1="0" y1="60" x2="860" y2="60" stroke="var(--border-subtle)" stroke-width="1" />
+
+        <!-- Interwoven bezier waves -->
+        <path
+          d="M 0,60 C 200,60 280,30 430,60 C 580,90 660,60 860,60"
+          stroke="url(#waveGrad1)"
+          stroke-width="2.5"
+        />
+        <path
+          d="M 0,60 C 240,60 320,85 430,60 C 540,35 620,60 860,60"
+          stroke="url(#waveGrad2)"
+          stroke-width="2"
+        />
+        <path
+          d="M 120,60 C 280,60 360,20 430,60 C 500,100 580,60 740,60"
+          stroke="url(#waveGrad3)"
+          stroke-width="1.5"
+          stroke-dasharray="4 4"
+        />
+
+        <!-- Glowing Nodes along convergence -->
+        <circle cx="430" cy="60" r="4" fill="var(--accent-aqua)" />
+        <circle cx="430" cy="60" r="9" stroke="var(--accent-aqua)" stroke-width="1" opacity="0.4" />
+        <circle cx="360" cy="40" r="3" fill="var(--accent)" />
+        <circle cx="500" cy="80" r="3" fill="#C084FC" />
+      </svg>
     </div>
   </div>
 
@@ -153,6 +230,57 @@ import { site } from '../data/site';
     Email copied to clipboard
   </div>
 </section>
+
+<style>
+  .social-link:hover {
+    color: var(--accent) !important;
+    border-color: var(--accent) !important;
+    background: color-mix(in srgb, var(--accent) 6%, transparent) !important;
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var btn = document.getElementById('copy-email-btn');
+    var copyIcon = document.getElementById('copy-icon');
+    var checkIcon = document.getElementById('check-icon');
+    var label = document.getElementById('copy-label');
+    var toast = document.getElementById('copy-toast');
+
+    if (!btn) return;
+
+    btn.addEventListener('click', function () {
+      var email = btn.dataset.email || '';
+      navigator.clipboard.writeText(email).then(function () {
+        // Update button
+        if (copyIcon) copyIcon.style.display = 'none';
+        if (checkIcon) checkIcon.style.display = 'block';
+        if (label) label.textContent = 'Copied!';
+        btn.style.color = 'var(--accent)';
+        btn.style.borderColor = 'var(--accent)';
+
+        // Show toast
+        if (toast) {
+          toast.style.opacity = '1';
+          toast.style.transform = 'translateY(0)';
+        }
+
+        // Reset after 2.5s
+        setTimeout(function () {
+          if (copyIcon) copyIcon.style.display = 'block';
+          if (checkIcon) checkIcon.style.display = 'none';
+          if (label) label.textContent = 'Copy';
+          btn.style.color = '';
+          btn.style.borderColor = '';
+          if (toast) {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(8px)';
+          }
+        }, 2500);
+      });
+    });
+  })();
+</script>
 
 <style>
   .social-link:hover {

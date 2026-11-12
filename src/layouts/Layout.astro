@@ -34,7 +34,7 @@ const schemaGraph = jsonLd
   : { '@context': 'https://schema.org', ...personSchema };
 
 // Inline theme-init script — must run before paint to avoid FOUC
-// Default: light. Reads URL query param, then localStorage, respects that preference.
+// DEFAULT IS LIGHT for every first-time visitor (ignoring OS preference)
 const themeScript = `
 (function(){
   try {
@@ -56,15 +56,26 @@ const themeScript = `
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- Theme init MUST be first to prevent flash -->
+
+    <!-- Google Fonts for Sora (headings) & JetBrains Mono (labels) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Sora:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Theme initialization before first paint -->
     <script set:html={themeScript} is:inline></script>
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonicalURL} />
+    <meta name="generator" content={Astro.generator} />
 
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content="index, follow" />
+
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
@@ -82,5 +93,37 @@ const themeScript = `
   <body>
     <a href="#main" class="skip-link">Skip to content</a>
     <slot />
+
+    <!-- Safe progressive animation activation with 1.5s failsafe -->
+    <script is:inline>
+      (function() {
+        // Only if user hasn't requested reduced motion
+        var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!prefersReduced && typeof IntersectionObserver !== 'undefined') {
+          // Add class enabling animation transitions
+          document.documentElement.classList.add('js-anim');
+
+          var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          }, { threshold: 0.05, rootMargin: '40px 0px 40px 0px' });
+
+          document.querySelectorAll('.reveal').forEach(function(el) {
+            observer.observe(el);
+          });
+
+          // Failsafe: reveal everything after 1.5 seconds under all circumstances
+          setTimeout(function() {
+            document.querySelectorAll('.reveal').forEach(function(el) {
+              el.classList.add('visible');
+            });
+          }, 1500);
+        }
+      })();
+    </script>
   </body>
 </html>

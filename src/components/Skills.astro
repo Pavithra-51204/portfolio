@@ -4,49 +4,298 @@ import { getCollection } from 'astro:content';
 const groups = (await getCollection('skillGroups')).sort((a, b) => a.data.order - b.data.order);
 ---
 
-<section id="skills" style="
-  padding: 7rem 0;
-  border-top: 1px solid var(--border);
-">
+<section id="skills" class="site-section">
   <div class="section-container">
-    <div class="reveal" style="margin-bottom: 4rem;">
-      <span class="eyebrow">05 — Skills</span>
-      <h2 style="
-        font-family: var(--font-serif);
-        font-size: clamp(2.25rem, 4vw, 3.5rem);
-        line-height: 1.1;
-        letter-spacing: -0.02em;
-        margin-top: 0.75rem;
-      ">
-        Tools & technologies.
-      </h2>
+    <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 2.5rem;">
+      <span class="eyebrow">02 — Expertise</span>
+      <h2 class="section-heading">My Skills</h2>
+      <p style="font-size: 1rem; color: var(--text-secondary); max-width: 58ch;">
+        A grounded toolkit spanning agentic frameworks, cloud infrastructure, and modern full-stack development.
+      </p>
     </div>
 
+    <!-- Neural Network / Circuit Diagram Section (matches reference design) -->
     <div
-      class="reveal stagger-children"
+      class="app-card neural-skills-stage"
       style="
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 2.5rem;
+        padding: 2rem;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 3.5rem;
+        background: radial-gradient(circle at 65% 50%, color-mix(in srgb, var(--accent) 8%, transparent) 0%, var(--card-bg) 70%);
       "
     >
-      {groups.map((group) => (
-        <div>
-          <h3 style="
-            font-family: var(--font-mono);
-            font-size: 0.6875rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--text-tertiary);
-            margin-bottom: 0.875rem;
-          ">{group.data.label}</h3>
-          <div style="display: flex; flex-wrap: wrap; gap: 0.4375rem;">
-            {group.data.items.map((item) => (
-              <span class="chip">{item}</span>
-            ))}
+      <div
+        style="
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 2rem;
+          align-items: center;
+        "
+        class="neural-grid"
+      >
+        <!-- Floating Glass Inspector Card (matches reference's "Skill: TensorFlow" card) -->
+        <div style="z-index: 2;">
+          <div
+            id="skill-inspector-card"
+            style="
+              background: var(--bg-surface);
+              border: 1px solid var(--accent);
+              border-radius: 14px;
+              padding: 1.5rem;
+              box-shadow: 0 12px 32px color-mix(in srgb, var(--accent) 15%, transparent);
+              transition: all 0.25s ease;
+            "
+          >
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+              <span style="font-family: var(--font-mono); font-size: 0.6875rem; text-transform: uppercase; color: var(--accent); letter-spacing: 0.08em; font-weight: 600;">
+                Selected Cluster
+              </span>
+              <span id="inspector-index" style="font-family: var(--font-mono); font-size: 0.6875rem; color: var(--text-tertiary);">
+                01 / 06
+              </span>
+            </div>
+
+            <h3 id="inspector-title" style="font-family: var(--font-heading); font-size: 1.375rem; font-weight: 700; color: var(--text-primary); margin-bottom: 1rem;">
+              AI / ML
+            </h3>
+
+            <div id="inspector-chips" style="display: flex; flex-wrap: wrap; gap: 0.4rem;">
+              {groups[0].data.items.map((skill) => (
+                <span class="chip" style="border-color: color-mix(in srgb, var(--accent) 30%, var(--border));">
+                  {skill}
+                </span>
+              ))}
+            </div>
+            <p style="font-family: var(--font-mono); font-size: 0.6875rem; color: var(--text-tertiary); margin-top: 1rem;">
+              Hover or tap any neural node to inspect cluster details.
+            </p>
           </div>
         </div>
-      ))}
+
+        <!-- Inline SVG Neural Network / Circuit graphic with 6 interactive nodes -->
+        <div style="position: relative; display: flex; justify-content: center;">
+          <svg
+            viewBox="0 0 540 320"
+            class="neural-svg"
+            style="width: 100%; max-width: 520px; height: auto;"
+            role="img"
+            aria-label="Interactive circuit diagram of skill categories"
+          >
+            <!-- Connecting Circuit Lines with pulse effect -->
+            <g stroke="var(--accent)" stroke-width="1.8" opacity="0.35" fill="none">
+              <path d="M 120 70 L 260 50 L 420 90" stroke-dasharray="4 4" class="circuit-path" />
+              <path d="M 120 70 L 190 160 L 260 50" />
+              <path d="M 190 160 L 350 170 L 420 90" />
+              <path d="M 190 160 L 140 250 L 280 260" />
+              <path d="M 350 170 L 280 260 L 440 230" />
+              <path d="M 350 170 L 440 230" />
+            </g>
+
+            <!-- 6 Interactive Hub Nodes -->
+            {groups.map((group, index) => {
+              // Defined layout coordinates for 6 nodes
+              const coords = [
+                { cx: 120, cy: 70 },   // 0: AI / ML
+                { cx: 260, cy: 50 },   // 1: Languages
+                { cx: 420, cy: 90 },   // 2: Frameworks
+                { cx: 190, cy: 160 },  // 3: Backend & Data
+                { cx: 350, cy: 170 },  // 4: Cloud & DevOps
+                { cx: 280, cy: 260 },  // 5: Tooling
+              ][index];
+
+              return (
+                <g
+                  class="neural-node-group"
+                  data-index={index + 1}
+                  data-label={group.data.label}
+                  data-skills={JSON.stringify(group.data.items)}
+                  style="cursor: pointer;"
+                  tabindex="0"
+                  role="button"
+                  aria-label={`View ${group.data.label} skills`}
+                >
+                  <!-- Outer glowing aura -->
+                  <circle
+                    cx={coords.cx}
+                    cy={coords.cy}
+                    r="24"
+                    fill="var(--accent)"
+                    opacity={index === 0 ? "0.22" : "0.08"}
+                    class="node-glow"
+                  />
+                  <!-- Main circular node -->
+                  <circle
+                    cx={coords.cx}
+                    cy={coords.cy}
+                    r="16"
+                    fill="var(--bg-surface)"
+                    stroke="var(--accent)"
+                    stroke-width="2.2"
+                    class="node-circle"
+                  />
+                  <!-- Numeric index badge -->
+                  <text
+                    x={coords.cx}
+                    y={coords.cy + 4}
+                    text-anchor="middle"
+                    font-family="var(--font-mono)"
+                    font-size="11"
+                    font-weight="700"
+                    fill="var(--text-primary)"
+                  >
+                    {index + 1}
+                  </text>
+                  <!-- Node Label -->
+                  <text
+                    x={coords.cx}
+                    y={coords.cy + 28}
+                    text-anchor="middle"
+                    font-family="var(--font-mono)"
+                    font-size="9"
+                    font-weight="600"
+                    fill="var(--text-secondary)"
+                  >
+                    {group.data.label}
+                  </text>
+                </g>
+              );
+            })}
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- ALWAYS VISIBLE FULL CATEGORY LIST (Mobile fallback & No-JS Guarantee) -->
+    <div>
+      <h3
+        style="
+          font-family: var(--font-mono);
+          font-size: 0.75rem;
+          font-weight: 600;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: var(--accent);
+          margin-bottom: 1.75rem;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        "
+      >
+        <span>All Categorized Skills</span>
+        <span style="height: 1px; flex: 1; background: var(--border-subtle);"></span>
+      </h3>
+
+      <div
+        style="
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 1.5rem;
+        "
+      >
+        {groups.map((group) => (
+          <div class="app-card" style="padding: 1.5rem;">
+            <h4
+              style="
+                font-family: var(--font-heading);
+                font-size: 1.0625rem;
+                font-weight: 600;
+                color: var(--text-primary);
+                margin-bottom: 0.875rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+              "
+            >
+              <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--accent);"></span>
+              {group.data.label}
+            </h4>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.35rem;">
+              {group.data.items.map((skill) => (
+                <span class="chip">{skill}</span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </section>
+
+<style>
+  @media (min-width: 900px) {
+    .neural-grid {
+      grid-template-columns: 0.9fr 1.1fr !important;
+    }
+  }
+
+  .neural-node-group:hover .node-circle,
+  .neural-node-group.active .node-circle {
+    fill: var(--accent) !important;
+    stroke: #FFFFFF !important;
+  }
+  .neural-node-group:hover text,
+  .neural-node-group.active text:first-of-type {
+    fill: #FFFFFF !important;
+  }
+  .neural-node-group:hover .node-glow,
+  .neural-node-group.active .node-glow {
+    opacity: 0.45 !important;
+    r: 30;
+  }
+
+  @keyframes dash {
+    to {
+      stroke-dashoffset: -20;
+    }
+  }
+  .circuit-path {
+    animation: dash 2s linear infinite;
+  }
+</style>
+
+<script is:inline>
+  (function() {
+    var nodes = document.querySelectorAll('.neural-node-group');
+    var titleEl = document.getElementById('inspector-title');
+    var indexEl = document.getElementById('inspector-index');
+    var chipsEl = document.getElementById('inspector-chips');
+
+    if (!nodes.length || !titleEl || !chipsEl) return;
+
+    function selectNode(group) {
+      nodes.forEach(function(n) { n.classList.remove('active'); });
+      group.classList.add('active');
+
+      var label = group.getAttribute('data-label');
+      var index = group.getAttribute('data-index');
+      var skills = [];
+      try {
+        skills = JSON.parse(group.getAttribute('data-skills') || '[]');
+      } catch (e) {}
+
+      titleEl.textContent = label;
+      if (indexEl) indexEl.textContent = '0' + index + ' / 06';
+
+      chipsEl.innerHTML = '';
+      skills.forEach(function(skill) {
+        var span = document.createElement('span');
+        span.className = 'chip';
+        span.style.borderColor = 'color-mix(in srgb, var(--accent) 30%, var(--border))';
+        span.textContent = skill;
+        chipsEl.appendChild(span);
+      });
+    }
+
+    nodes.forEach(function(node) {
+      node.addEventListener('mouseenter', function() { selectNode(node); });
+      node.addEventListener('click', function() { selectNode(node); });
+      node.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          selectNode(node);
+        }
+      });
+    });
+  })();
+</script>

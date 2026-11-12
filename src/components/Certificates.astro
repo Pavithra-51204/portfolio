@@ -1,0 +1,171 @@
+---
+import { site } from '../data/site';
+
+const cloudCerts = [
+  { title: 'AWS Certified Cloud Practitioner', code: 'CLF-C02', issuer: 'Amazon Web Services' },
+  { title: 'Microsoft Certified: Azure Data Scientist Associate', code: 'DP-100', issuer: 'Microsoft' },
+  { title: 'Microsoft Certified: AI Fundamentals', code: 'AI-900', issuer: 'Microsoft' },
+  { title: 'Microsoft Certified: Data Fundamentals', code: 'DP-900', issuer: 'Microsoft' },
+  { title: 'Microsoft Certified: Azure Fundamentals', code: 'AZ-900', issuer: 'Microsoft' },
+];
+
+const nptelCerts = [
+  { title: 'Cloud Computing', code: 'NPTEL Elite', issuer: 'NPTEL / IIT' },
+  { title: 'Data Science for Engineers', code: 'NPTEL Elite', issuer: 'NPTEL / IIT' },
+  { title: 'Python for Data Science', code: 'NPTEL Elite', issuer: 'NPTEL / IIT' },
+  { title: 'Database Management Systems', code: 'NPTEL Elite', issuer: 'NPTEL / IIT' },
+  { title: 'Programming in Java', code: 'NPTEL Elite', issuer: 'NPTEL / IIT' },
+];
+
+const achievements = [
+  'Finalist, HackIndia (Web3 and AI Hackathon)',
+  'Technical Coordinator, AWS Cloud Clubs',
+  '3rd place, Hack-a-Cloud 3.0',
+  '1st place, AWS PartyRock Competition',
+  '2nd place, Ideathon Competition',
+  'Technical Blogger on Medium',
+];
+---
+
+<section id="certificates" class="site-section">
+  <div class="section-container">
+    <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 3rem;">
+      <span class="eyebrow">06 — Credentials</span>
+      <h2 class="section-heading">Certificates & Achievements</h2>
+      <p style="font-size: 1rem; color: var(--text-secondary); max-width: 58ch;">
+        Industry certifications across AWS, Azure, and university-level data science and distributed systems programs.
+      </p>
+    </div>
+
+    <!-- Row 1: Cloud & AI Certifications -->
+    <div style="margin-bottom: 2.5rem;">
+      <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem;">
+        <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--accent);"></span>
+        <h3 style="font-family: var(--font-heading); font-size: 1.125rem; font-weight: 700; color: var(--text-primary); margin: 0;">
+          Cloud & AI Industry Certifications
+        </h3>
+      </div>
+
+      <div
+        style="
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+          gap: 1rem;
+        "
+      >
+        {cloudCerts.map((cert) => (
+          <div class="app-card" style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 120px;">
+            <div>
+              <span style="font-family: var(--font-mono); font-size: 0.625rem; text-transform: uppercase; color: var(--text-tertiary); letter-spacing: 0.08em; display: block; margin-bottom: 0.35rem;">
+                {cert.issuer}
+              </span>
+              <h4 style="font-family: var(--font-heading); font-size: 0.9375rem; font-weight: 600; color: var(--text-primary); line-height: 1.35; margin: 0;">
+                {cert.title}
+              </h4>
+            </div>
+            <div style="margin-top: 0.75rem; padding-top: 0.5rem; border-top: 1px dashed var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 600; color: var(--accent);">
+                {cert.code}
+              </span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Visual Connecting Bridge between Row 1 and Row 2 (matches reference connector) -->
+    <div style="display: flex; justify-content: center; margin: 1rem 0;">
+      <svg width="40" height="30" viewBox="0 0 40 30" fill="none" stroke="var(--accent)" stroke-width="2" stroke-dasharray="3 3">
+        <line x1="20" y1="0" x2="20" y2="30" />
+      </svg>
+    </div>
+
+    <!-- Row 2: NPTEL Rigorous Technical Certifications -->
+    <div style="margin-bottom: 3.5rem;">
+      <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem;">
+        <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--accent-aqua);"></span>
+        <h3 style="font-family: var(--font-heading); font-size: 1.125rem; font-weight: 700; color: var(--text-primary); margin: 0;">
+          National Programme on Technology Enhanced Learning (NPTEL)
+        </h3>
+      </div>
+
+      <div
+        style="
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+          gap: 1rem;
+        "
+      >
+        {nptelCerts.map((cert) => (
+          <div class="app-card" style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 120px;">
+            <div>
+              <span style="font-family: var(--font-mono); font-size: 0.625rem; text-transform: uppercase; color: var(--text-tertiary); letter-spacing: 0.08em; display: block; margin-bottom: 0.35rem;">
+                {cert.issuer}
+              </span>
+              <h4 style="font-family: var(--font-heading); font-size: 0.9375rem; font-weight: 600; color: var(--text-primary); line-height: 1.35; margin: 0;">
+                {cert.title}
+              </h4>
+            </div>
+            <div style="margin-top: 0.75rem; padding-top: 0.5rem; border-top: 1px dashed var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 600; color: var(--accent-aqua);">
+                {cert.code}
+              </span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent-aqua)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Achievements & Extracurricular Block below -->
+    <div class="app-card" style="padding: 2rem;">
+      <h3
+        style="
+          font-family: var(--font-mono);
+          font-size: 0.75rem;
+          font-weight: 600;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: var(--accent);
+          margin-bottom: 1.5rem;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        "
+      >
+        <span>Honors & Extracurricular Achievements</span>
+        <span style="height: 1px; flex: 1; background: var(--border-subtle);"></span>
+      </h3>
+
+      <div
+        style="
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+          gap: 1.25rem;
+        "
+      >
+        {achievements.map((item) => (
+          <div style="display: flex; align-items: flex-start; gap: 0.75rem;">
+            <span style="color: var(--accent); font-size: 0.875rem; margin-top: 0.1rem; flex-shrink: 0;">★</span>
+            <div style="font-size: 0.9375rem; line-height: 1.5; color: var(--text-secondary);">
+              {item === 'Technical Blogger on Medium' ? (
+                <a
+                  href={site.links.medium}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style="color: var(--accent); font-weight: 500; text-decoration: underline; text-underline-offset: 3px;"
+                >
+                  Technical Blogger on Medium ↗
+                </a>
+              ) : (
+                <span>{item}</span>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+

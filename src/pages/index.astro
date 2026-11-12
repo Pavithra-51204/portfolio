@@ -4,10 +4,12 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
 import About from '../components/About.astro';
+import Skills from '../components/Skills.astro';
 import SelectedWork from '../components/SelectedWork.astro';
 import ExperienceTimeline from '../components/ExperienceTimeline.astro';
 import Research from '../components/Research.astro';
-import Skills from '../components/Skills.astro';
+import Certificates from '../components/Certificates.astro';
+import AskBot from '../components/AskBot.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
 import { site } from '../data/site';
@@ -34,10 +36,12 @@ const scholarlyArticles = publications
   <main id="main" style="padding-top: 64px;">
     <Hero />
     <About />
+    <Skills />
     <SelectedWork />
     <ExperienceTimeline />
     <Research />
-    <Skills />
+    <Certificates />
+    <AskBot />
     <Contact />
     <Footer />
   </main>
@@ -135,12 +139,14 @@ const scholarlyArticles = publications
 <script is:inline>
   (function () {
     var items = [
-      { label: 'About',      href: '#about' },
-      { label: 'Projects',   href: '#projects' },
-      { label: 'Experience', href: '#experience' },
-      { label: 'Research',   href: '#research' },
-      { label: 'Skills',     href: '#skills' },
-      { label: 'Contact',    href: '#contact' },
+      { label: 'About',        href: '#about' },
+      { label: 'Skills',       href: '#skills' },
+      { label: 'Projects',     href: '#projects' },
+      { label: 'Experience',   href: '#experience' },
+      { label: 'Research',     href: '#research' },
+      { label: 'Certificates', href: '#certificates' },
+      { label: 'Ask My Bot',   href: '#bot' },
+      { label: 'Contact',      href: '#contact' },
       { label: 'AgentForge',          href: '/projects/agentforge/' },
       { label: 'VelocityLB',          href: '/projects/velocitylb/' },
       { label: 'Autonomous SRE Engine',href: '/projects/autonomous-sre-engine/' },

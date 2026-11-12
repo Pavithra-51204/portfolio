@@ -1,296 +1,274 @@
 ---
 import { getCollection } from 'astro:content';
 
-const projects = (await getCollection('projects'))
-  .sort((a, b) => a.data.order - b.data.order);
-
-const featured = projects.filter(p => p.data.featured);
-const large = featured.slice(0, 2);    // AgentForge, VelocityLB
-const medium = featured.slice(2, 6);   // remaining 4
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 ---
 
-<section id="projects" style="
-  padding: 7rem 0;
-  border-top: 1px solid var(--border);
-">
+<section id="projects" class="site-section">
   <div class="section-container">
-    <!-- Section header -->
-    <div class="reveal" style="
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 3.5rem;
-    ">
+    <!-- Header -->
+    <div
+      style="
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        margin-bottom: 2.5rem;
+      "
+    >
       <div>
-        <span class="eyebrow">02 — Projects</span>
-        <h2 style="
-          font-family: var(--font-serif);
-          font-size: clamp(2.25rem, 4vw, 3.5rem);
-          line-height: 1.1;
-          letter-spacing: -0.02em;
-          margin-top: 0.75rem;
-        ">
-          Things I've built.
-        </h2>
+        <span class="eyebrow">03 — Engineering</span>
+        <h2 class="section-heading">Projects</h2>
+        <p style="font-size: 1rem; color: var(--text-secondary); max-width: 54ch;">
+          A selection of systems I have designed and built.
+        </p>
       </div>
+
       <a
         href="https://github.com/Pavithra-51204?tab=repositories"
         target="_blank"
-        rel="noopener"
-        style="
-          font-family: var(--font-mono);
-          font-size: 0.75rem;
-          color: var(--text-secondary);
-          display: flex;
-          align-items: center;
-          gap: 0.3rem;
-          transition: color 0.2s;
-          margin-bottom: 0.5rem;
-          white-space: nowrap;
-        "
-        onmouseover="this.style.color='var(--accent)'"
-        onmouseout="this.style.color='var(--text-secondary)'"
+        rel="noopener noreferrer"
+        class="btn-secondary"
+        style="padding: 0.6rem 1.25rem; font-size: 0.75rem;"
       >
-        View all repositories
-        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        <span>All repositories</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+          <polyline points="15 3 21 3 21 9"/>
+          <line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
       </a>
     </div>
 
-    <!-- Bento grid -->
-    <div class="bento-grid stagger-children reveal" style="
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 1rem;
-    ">
-      <!-- Large featured tiles: AgentForge and VelocityLB -->
-      {large.map((project, i) => (
-        <a
-          href={`/projects/${project.data.id}/`}
-          class="project-card spotlight-card tilt-card"
-          style={`
-            grid-column: span 6;
-            background: var(--bg-surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            min-height: 320px;
-            box-shadow: var(--shadow-sm);
-            transition: box-shadow 0.3s, border-color 0.3s, transform 0.3s;
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-          `}
-        >
-          <!-- Large outcome metric -->
-          {project.data.outcome && (
-            <div style="
-              font-family: var(--font-mono);
-              font-size: 0.6875rem;
-              color: var(--accent);
-              letter-spacing: 0.04em;
-              padding: 0.3rem 0.6rem;
-              border: 1px solid var(--accent);
-              border-radius: 4px;
-              display: inline-block;
-              align-self: flex-start;
-              background: color-mix(in srgb, var(--accent) 6%, transparent);
-            ">
-              {project.data.outcome}
-            </div>
-          )}
-          <div style="flex: 1;">
-            <h3 style="
-              font-family: var(--font-serif);
-              font-size: 1.75rem;
-              line-height: 1.15;
-              color: var(--text-primary);
-              margin-bottom: 0.625rem;
-            ">{project.data.name}</h3>
-            <p style="
-              font-size: 0.9375rem;
-              color: var(--text-secondary);
-              line-height: 1.6;
-              display: -webkit-box;
-              -webkit-line-clamp: 3;
-              -webkit-box-orient: vertical;
-              overflow: hidden;
-            ">{project.data.summary}</p>
-          </div>
-          <div style="
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.375rem;
-            margin-top: auto;
-          ">
-            {project.data.stack.map((tech: string) => (
-              <span class="chip">{tech}</span>
-            ))}
-          </div>
-          <!-- Arrow -->
-          <div style="
-            position: absolute;
-            bottom: 1.75rem;
-            right: 1.75rem;
-            width: 36px;
-            height: 36px;
-            border: 1px solid var(--border);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-tertiary);
-            transition: color 0.2s, border-color 0.2s, transform 0.2s;
-          " class="card-arrow">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </div>
-        </a>
-      ))}
+    <!-- Showcase Container (matches reference design: big preview + side list) -->
+    <div
+      id="projects-showcase"
+      class="app-card"
+      style="
+        padding: 1.5rem;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      "
+    >
+      <!-- Left/Main Showcase Stage -->
+      <div class="showcase-stage" style="position: relative;">
+        {projects.map((project, index) => (
+          <article
+            class={`project-pane ${index === 0 ? 'active' : ''}`}
+            data-project-id={project.data.id}
+            style="
+              display: flex;
+              flex-direction: column;
+              gap: 1.5rem;
+            "
+          >
+            <!-- Generated Cover Panel (accent gradient + large headline metric + circuit art) -->
+            <div
+              style="
+                position: relative;
+                width: 100%;
+                height: 220px;
+                border-radius: 12px;
+                overflow: hidden;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: linear-gradient(135deg, color-mix(in srgb, var(--grad-start) 85%, #000), var(--grad-end));
+                padding: 2rem;
+                box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.3);
+              "
+            >
+              <!-- Faint Circuit Background Art -->
+              <svg
+                viewBox="0 0 400 180"
+                aria-hidden="true"
+                style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.18;"
+              >
+                <path d="M 20 90 L 100 90 L 140 40 L 260 40 L 300 90 L 380 90" stroke="#FFFFFF" stroke-width="2" fill="none" />
+                <path d="M 100 90 L 140 140 L 260 140 L 300 90" stroke="#FFFFFF" stroke-width="2" fill="none" />
+                <circle cx="100" cy="90" r="5" fill="#FFFFFF" />
+                <circle cx="260" cy="40" r="5" fill="#FFFFFF" />
+                <circle cx="300" cy="90" r="5" fill="#FFFFFF" />
+              </svg>
 
-      <!-- Medium tiles -->
-      {medium.map((project) => (
-        <a
-          href={`/projects/${project.data.id}/`}
-          class="project-card spotlight-card tilt-card"
-          style="
-            grid-column: span 3;
-            background: var(--bg-surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 1.75rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.875rem;
-            min-height: 240px;
-            box-shadow: var(--shadow-sm);
-            transition: box-shadow 0.3s, border-color 0.3s, transform 0.3s;
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-          "
-        >
-          {project.data.outcome && (
-            <div style="
-              font-family: var(--font-mono);
-              font-size: 0.625rem;
-              color: var(--accent);
-              letter-spacing: 0.04em;
-              line-height: 1.4;
-            ">
-              {project.data.outcome}
+              <!-- Prominent Headline Outcome Metric -->
+              <div style="position: relative; z-index: 1; text-align: center; color: #FFFFFF;">
+                <span style="font-family: var(--font-mono); font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.85; display: block; margin-bottom: 0.4rem;">
+                  Core Verification Metric
+                </span>
+                <span style="font-family: var(--font-heading); font-size: clamp(1.25rem, 2.5vw, 1.875rem); font-weight: 700; line-height: 1.25; text-shadow: 0 4px 12px rgba(0,0,0,0.4);">
+                  {project.data.outcome}
+                </span>
+              </div>
             </div>
-          )}
-          <div style="flex: 1;">
-            <h3 style="
-              font-family: var(--font-serif);
-              font-size: 1.25rem;
-              line-height: 1.2;
-              color: var(--text-primary);
-              margin-bottom: 0.5rem;
-            ">{project.data.name}</h3>
-            <p style="
-              font-size: 0.8125rem;
-              color: var(--text-secondary);
-              line-height: 1.6;
-              display: -webkit-box;
-              -webkit-line-clamp: 3;
-              -webkit-box-orient: vertical;
-              overflow: hidden;
-            ">{project.data.tagline}</p>
-          </div>
-          <div style="display: flex; flex-wrap: wrap; gap: 0.3rem;">
-            {project.data.stack.slice(0, 4).map((tech: string) => (
-              <span class="chip">{tech}</span>
-            ))}
-          </div>
-          <div style="
-            position: absolute;
-            bottom: 1.25rem;
-            right: 1.25rem;
-            width: 28px;
-            height: 28px;
-            border: 1px solid var(--border);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-tertiary);
-            transition: color 0.2s, border-color 0.2s, transform 0.2s;
-          " class="card-arrow">
-            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </div>
-        </a>
-      ))}
+
+            <!-- Project Meta & Descriptions -->
+            <div>
+              <div style="display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;">
+                <h3 style="font-family: var(--font-heading); font-size: 1.625rem; font-weight: 700; color: var(--text-primary); margin: 0;">
+                  {project.data.name}
+                </h3>
+                <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); font-weight: 600;">
+                  {project.data.tagline}
+                </span>
+              </div>
+
+              <p style="font-size: 0.9375rem; line-height: 1.7; color: var(--text-secondary); margin-bottom: 1.25rem;">
+                {project.data.summary}
+              </p>
+
+              <!-- Tech chips -->
+              <div style="display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 1.75rem;">
+                {project.data.stack.map((tech) => (
+                  <span class="chip">{tech}</span>
+                ))}
+              </div>
+
+              <!-- Action Links -->
+              <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                <a
+                  href={`/projects/${project.data.id}/`}
+                  class="btn-primary"
+                  style="padding: 0.55rem 1.25rem; font-size: 0.75rem;"
+                >
+                  Read case study
+                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <a
+                  href={project.data.repoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-secondary"
+                  style="padding: 0.55rem 1.25rem; font-size: 0.75rem;"
+                >
+                  View on GitHub
+                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                </a>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <!-- Right/Side List of 6 Project Names (matches reference side selection list) -->
+      <div
+        class="showcase-nav"
+        style="
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          border-left: 1px solid var(--border-subtle);
+          padding-left: 1.5rem;
+        "
+      >
+        <span style="font-family: var(--font-mono); font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-tertiary); margin-bottom: 0.5rem;">
+          Select Project
+        </span>
+
+        {projects.map((project, index) => (
+          <button
+            type="button"
+            class={`project-nav-item ${index === 0 ? 'active' : ''}`}
+            data-target-id={project.data.id}
+            style="
+              text-align: left;
+              background: transparent;
+              border: 1px solid var(--border-subtle);
+              border-radius: 10px;
+              padding: 0.85rem 1rem;
+              cursor: pointer;
+              transition: all 0.2s ease;
+            "
+          >
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <span style="font-family: var(--font-heading); font-size: 0.9375rem; font-weight: 600; color: var(--text-primary);" class="nav-item-title">
+                {project.data.name}
+              </span>
+              <span style="font-family: var(--font-mono); font-size: 0.6875rem; color: var(--text-tertiary);">
+                0{index + 1}
+              </span>
+            </div>
+            <p style="font-family: var(--font-mono); font-size: 0.6875rem; color: var(--text-secondary); margin-top: 0.25rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+              {project.data.tagline}
+            </p>
+          </button>
+        ))}
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .project-card:hover {
-    box-shadow: var(--shadow-lg) !important;
-    border-color: color-mix(in srgb, var(--accent) 30%, var(--border)) !important;
+  @media (min-width: 900px) {
+    #projects-showcase {
+      grid-template-columns: 1.35fr 0.65fr !important;
+      padding: 2.25rem !important;
+    }
   }
-  .project-card:hover .card-arrow {
-    color: var(--accent) !important;
+
+  @media (max-width: 899px) {
+    .showcase-nav {
+      border-left: none !important;
+      padding-left: 0 !important;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 1.5rem;
+    }
+  }
+
+  /* JavaScript-enabled showcase toggle: show only active pane */
+  html.js-ready .project-pane:not(.active) {
+    display: none !important;
+  }
+
+  /* Without JS, all projects stack visibly */
+  html:not(.js-ready) .project-pane {
+    display: flex !important;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  html:not(.js-ready) .showcase-nav {
+    display: none !important;
+  }
+
+  .project-nav-item:hover {
     border-color: var(--accent) !important;
-    transform: translateX(2px) !important;
+    background: color-mix(in srgb, var(--accent) 5%, transparent) !important;
   }
-
-  @media (max-width: 900px) {
-    .bento-grid {
-      display: flex !important;
-      flex-direction: column !important;
-    }
+  .project-nav-item.active {
+    border-color: var(--accent) !important;
+    background: color-mix(in srgb, var(--accent) 12%, transparent) !important;
   }
-
-  @media (max-width: 640px) {
-    .project-card {
-      padding: 1.25rem !important;
-      min-height: auto !important;
-    }
-  }
-
-  @media (min-width: 901px) and (max-width: 1100px) {
-    .bento-grid [style*="span 3"] {
-      grid-column: span 6 !important;
-    }
+  .project-nav-item.active .nav-item-title {
+    color: var(--accent) !important;
   }
 </style>
 
 <script is:inline>
-  // ── Card spotlight + tilt ────────────────────────────────────────────────────
   (function () {
-    var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var cards = document.querySelectorAll('.tilt-card.spotlight-card');
+    document.documentElement.classList.add('js-ready');
 
-    cards.forEach(function (card) {
-      card.addEventListener('mousemove', function (e) {
-        var rect = card.getBoundingClientRect();
-        var x = e.clientX - rect.left;
-        var y = e.clientY - rect.top;
-        var pctX = (x / rect.width) * 100;
-        var pctY = (y / rect.height) * 100;
+    var buttons = document.querySelectorAll('.project-nav-item');
+    var panes = document.querySelectorAll('.project-pane');
 
-        card.style.setProperty('--mouse-x', pctX + '%');
-        card.style.setProperty('--mouse-y', pctY + '%');
+    if (!buttons.length || !panes.length) return;
 
-        if (!prefersReduced) {
-          var tiltX = ((y / rect.height) - 0.5) * -4;
-          var tiltY = ((x / rect.width) - 0.5) * 4;
-          card.style.setProperty('--tilt-x', tiltX + 'deg');
-          card.style.setProperty('--tilt-y', tiltY + 'deg');
-        }
-      });
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var targetId = btn.getAttribute('data-target-id');
 
-      card.addEventListener('mouseleave', function () {
-        card.style.setProperty('--tilt-x', '0deg');
-        card.style.setProperty('--tilt-y', '0deg');
-        card.style.setProperty('--mouse-x', '50%');
-        card.style.setProperty('--mouse-y', '50%');
+        buttons.forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+
+        panes.forEach(function (pane) {
+          if (pane.getAttribute('data-project-id') === targetId) {
+            pane.classList.add('active');
+          } else {
+            pane.classList.remove('active');
+          }
+        });
       });
     });
   })();
