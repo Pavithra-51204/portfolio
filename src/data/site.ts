@@ -41,6 +41,7 @@ export const education = [
 ] as const;
 
 export const certifications = [
+  'Claude Certified Architect - Foundations',
   'AWS Certified Cloud Practitioner (CLF-C02)',
   'Microsoft Certified: Azure Data Scientist Associate (DP-100)',
   'Microsoft Certified: AI Fundamentals (AI-900)',
